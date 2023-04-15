@@ -7,7 +7,7 @@ import { TUICallKit } from '@tencentcloud/call-uikit-vue';
 
 const SDKAppID = 1400034652; // Your SDKAppID
 const secretKey = '90a459de733e7fa5c3f48b09baa012f52f846e0789ca6a2bf7af984ae17764b6'; //Your secretKey
-const userID = 'admin_dev'; // User ID
+const userID = 'ligeng'; // User ID
 
 
 // init TUIKit
