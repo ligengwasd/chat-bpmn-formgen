@@ -4,6 +4,9 @@ import { TUIComponents, TUICore, genTestUserSig } from './TUIKit';
 // import TUICallKit
 import { TUICallKit } from '@tencentcloud/call-uikit-vue';
 import router from './router';
+import ElementPlus from 'element-plus';//为vue3项目特别更新的版本
+import 'element-plus/dist/index.css';
+
 
 
 const SDKAppID = 1400034652; // Your SDKAppID
@@ -35,5 +38,6 @@ TUIKit.login({
 createApp(App)
     .use(TUIKit)
     .use(router)
+    .use(ElementPlus)
     .mount('#app');
 
