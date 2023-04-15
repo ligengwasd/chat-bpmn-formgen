@@ -3,6 +3,7 @@ import App from './App.vue';
 import { TUIComponents, TUICore, genTestUserSig } from './TUIKit';
 // import TUICallKit
 import { TUICallKit } from '@tencentcloud/call-uikit-vue';
+import router from './router';
 
 
 const SDKAppID = 1400034652; // Your SDKAppID
@@ -31,4 +32,8 @@ TUIKit.login({
 });
 
 
-createApp(App).use(TUIKit).mount('#app');
+createApp(App)
+    .use(TUIKit)
+    .use(router)
+    .mount('#app');
+
