@@ -1,12 +1,16 @@
 <template>
-    <div>表单设计器
-<!--        <fc-designer ref="designer"/>-->
-
+    <div>
+        <fc-designer ref="designer"/>
     </div>
 </template>
 
 <script>
-
+export default {
+    data() {
+        return {
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped>

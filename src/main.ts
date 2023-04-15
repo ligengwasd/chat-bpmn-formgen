@@ -7,6 +7,7 @@ import router from './router';
 import ElementPlus from 'element-plus';//为vue3项目特别更新的版本
 import 'element-plus/dist/index.css';
 import formCreate from '@form-create/element-ui'
+import FcDesigner from '@form-create/designer'
 
 const SDKAppID = 1400034652; // Your SDKAppID
 const secretKey = '90a459de733e7fa5c3f48b09baa012f52f846e0789ca6a2bf7af984ae17764b6'; //Your secretKey
@@ -39,5 +40,6 @@ createApp(App)
     .use(router)
     .use(ElementPlus)
     .use(formCreate)
+    .use(FcDesigner)
     .mount('#app');
 
