@@ -15,7 +15,9 @@
                     <el-menu-item index="/home/formParser">
                         <router-link to="/home/formParser">表单解析器</router-link>
                     </el-menu-item>
-                    <el-menu-item>流程设计器</el-menu-item>
+                    <el-menu-item index="/home/bpmnDesign">
+                        <router-link to="/home/bpmnDesign">流程设计器</router-link>
+                    </el-menu-item>
                 </el-menu>
             </el-aside>
             <el-container>

@@ -28,6 +28,11 @@ const routes: Array<RouteRecordRaw> = [
           path: '/home/formParser',  // 项目 进行中
           name: 'formParser',
           component: () => import(/* webpackChunkName: "about" */ '../views/FormParser.vue')    // 子路由
+        },
+        {
+          path: '/home/bpmnDesign',  // 项目 进行中
+          name: 'bpmnDesign',
+          component: () => import(/* webpackChunkName: "about" */ '../views/Bpmn.vue')    // 子路由
         }
       ]
     }

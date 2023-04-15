@@ -12,6 +12,7 @@
     "@form-create/element-ui": "^3.1.18",
     "@tencentcloud/chat-uikit-vue": "^1.4.1",
     "@vueuse/core": "^8.9.4",
+    "bpmn-js": "^12.1.1",
     "element-plus": "^2.3.3",
     "vue": "^3.2.47",
     "vue-router": "^4.0.0-0"
