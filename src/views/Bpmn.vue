@@ -12,6 +12,8 @@ import '../../node_modules/bpmn-js/dist/assets/bpmn-js.css'
 import '../../node_modules/bpmn-js/dist/assets/diagram-js.css'
 import '../../node_modules/bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
 import '../../node_modules/bpmn-js-properties-panel/dist/assets/properties-panel.css'
+import customTranslate from '../bpmnxml/customTranslate';
+
 
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import {
@@ -180,10 +182,14 @@ export default {
             additionalModules: [
                 BpmnPropertiesPanelModule,
                 BpmnPropertiesProviderModule,
+                {
+                    translate: [ 'value', customTranslate ]
+                }
                 // magicPropertiesProviderModule,
             ],
             moddleExtensions: {
                 // magic: magicModdleDescriptor,
+
             },
         });
 
