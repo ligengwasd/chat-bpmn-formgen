@@ -1,7 +1,8 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
     <div>
         <div id="js-canvas" style="border: 1px solid green;height: 500px;"></div>
-        <div id="js-properties-panel"></div>
+        <br>
+        <div id="js-properties-panel" style="border: 1px solid green;height: 200px;"></div>
     </div>
 </template>
 
