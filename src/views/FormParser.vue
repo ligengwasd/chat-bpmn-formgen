@@ -1,7 +1,16 @@
 <template>
     <div>
-        <form-create :rule="rule" v-model:api="fApi" :option="options" v-model="value"/>
-        <form-create :rule="httpClient.rule" :option="httpClient.options" />
+        <el-row>
+            <el-col :span="12">
+                <h1>数据编辑：</h1>
+                <form-create :rule="rule" v-model:api="fApi" :option="options" v-model="value"/>
+            </el-col>
+            <el-col :span="12">
+                <h1>数据发送：</h1>
+                <form-create :rule="httpClient.rule" :option="httpClient.options" />
+            </el-col>
+        </el-row>
+
 
     </div>
 </template>
@@ -13,9 +22,16 @@ export default {
             fApi:{},
             value:{field1:'111',field2:'222',time:'11:11:11'},
             options:{
-                onSubmit:(formData)=>{
-                    alert(JSON.stringify(formData))
-                }
+                "form": {
+                    "labelPosition": "right",
+                    "size": "medium",
+                    "labelWidth": "125px",
+                    "hideRequiredAsterisk": false,
+                    "showMessage": true,
+                    "inlineMessage": false
+                },
+                "submitBtn": false,
+                "resetBtn": false
             },
             rule:[
                 {type:'input', field:'field1',title:'field1',value:'aaa'},
