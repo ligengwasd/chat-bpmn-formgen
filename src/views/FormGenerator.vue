@@ -25,7 +25,15 @@ export default {
     methods: {
         exportForm() {
             const json = this.$refs.designer.getJson();
-            console.log(json);
+            const param = {
+                taskId: "f7d1bd9d-ddcf-11ed-af9f-c67be54432b8",
+                message:json
+            }
+            this.$http.post('/task/f7d1bd9d-ddcf-11ed-af9f-c67be54432b8/comment/create', param).then(response => {
+                console.log(response.data);
+            }) .catch(error => {
+                console.log(error);
+            });
         },
     }
 }
