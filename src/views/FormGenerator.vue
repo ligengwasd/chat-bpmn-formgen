@@ -24,7 +24,7 @@ export default {
     },
     methods: {
         exportForm() {
-            const json = this.$refs.designer.getRule();
+            const json = this.$refs.designer.getJson();
             console.log(json);
         },
     }
