@@ -9,12 +9,12 @@
             </template>
         </el-table-column>
     </el-table>
-    <el-dialog v-model="dialogVisible" title="表单设计器" @opened = "handleOpen"  @closed="handleClose" style="width: 100%; height: 100%">
+    <el-dialog v-model="formGeneratorDialogVisible" title="表单设计器" @opened = "handleOpen" @closed="handleClose" style="width: 100%; height: 100%">
         <fc-designer ref="designer"/>
         <template #footer>
             <span class="dialog-footer">
                 表单名称：
-                <el-input v-model="dialogData.formName" placeholder="请输入表单名称" style="width: 200px; margin-right: 20px"/>
+                <el-input v-model="formGeneratorDialogData.formName" placeholder="请输入表单名称" style="width: 200px; margin-right: 20px"/>
                 <el-button @click="closeFormDesignerDialog()">取消</el-button>
                 <el-button type="primary" @click="exportForm">保存表单</el-button>
             </span>
@@ -31,8 +31,8 @@ export default {
     data() {
         return {
             formList: [],
-            dialogVisible: false,
-            dialogData: {
+            formGeneratorDialogVisible: false,
+            formGeneratorDialogData: {
                 formId: null,
                 formName: null,
                 fromDesignerData: null
@@ -50,24 +50,24 @@ export default {
             }
             const param = {
                 "type": "form",
-                "key": this.dialogData.formName,
+                "key": this.formGeneratorDialogData.formName,
                 "value": JSON.stringify(bizConfigValue)
             }
-            if (this.dialogData.formId == null) {
+            if (this.formGeneratorDialogData.formId == null) {
                 this.$http.post('/bizConfig', param).then(response => {
                     console.log(response.data);
                 }) .catch(error => {
                     console.log(error);
                 });
             } else {
-                this.$http.put('/bizConfig/'.concat(this.dialogData.formId), param).then(response => {
+                this.$http.put('/bizConfig/'.concat(this.formGeneratorDialogData.formId), param).then(response => {
                     console.log(response.data);
                 }) .catch(error => {
                     console.log(error);
                 });
             }
             ElMessage({message: '操作成功', type: 'success',})
-            this.dialogVisible = false;
+            this.formGeneratorDialogVisible = false;
         },
         loadAllForm() {
             this.$http.get('/bizConfig/list').then(response => {
@@ -76,27 +76,27 @@ export default {
             });
         },
         openFormDesignerDialog(rowData) {
-            this.dialogVisible = true;
+            this.formGeneratorDialogVisible = true;
             if (rowData != null) {
-                this.dialogData.fromDesignerData = rowData.value;
-                this.dialogData.formName = rowData.key;
-                this.dialogData.formId = rowData.id;
+                this.formGeneratorDialogData.fromDesignerData = rowData.value;
+                this.formGeneratorDialogData.formName = rowData.key;
+                this.formGeneratorDialogData.formId = rowData.id;
             }
         },
         closeFormDesignerDialog() {
-            this.dialogVisible = false;
+            this.formGeneratorDialogVisible = false;
         },
         handleOpen() {
             console.log("handleOpen")
-            const selectForm = JSON.parse(this.dialogData.fromDesignerData);
+            const selectForm = JSON.parse(this.formGeneratorDialogData.fromDesignerData);
             this.$refs.designer.setRule(selectForm.formRule);
             this.$refs.designer.setOption(selectForm.formOptions);
         },
         handleClose() {
             console.log("handleClose");
-            this.dialogData.fromDesignerData = null;
-            this.dialogData.formName = null;
-            this.dialogData.formId = null;
+            this.formGeneratorDialogData.fromDesignerData = null;
+            this.formGeneratorDialogData.formName = null;
+            this.formGeneratorDialogData.formId = null;
             this.$refs.designer.clearActiveRule();
             this.$refs.designer.clearDragRule();
             this.loadAllForm();
