@@ -1,20 +1,8 @@
 <template>
-    <el-table
-        :data="formList"
-        style="width: 100%">
+    <el-table :data="formList" style="width: 100%">
+        <el-table-column prop="key" label="姓名" width="180"></el-table-column>
         <el-table-column
-            prop="type"
-            label="日期"
-            width="180">
-        </el-table-column>
-        <el-table-column
-            prop="key"
-            label="姓名"
-            width="180">
-        </el-table-column>
-        <el-table-column
-            prop="address"
-            label="地址">
+            label="操作">
         </el-table-column>
     </el-table>
 
@@ -95,6 +83,34 @@ export default {
     }
 }
 </script>
+<style>
+.time {
+    font-size: 13px;
+    color: #999;
+}
 
-<style lang="scss" scoped>
+.bottom {
+    margin-top: 13px;
+    line-height: 12px;
+}
+
+.button {
+    padding: 0;
+    float: right;
+}
+
+.image {
+    width: 100%;
+    display: block;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+
+.clearfix:after {
+    clear: both
+}
 </style>
