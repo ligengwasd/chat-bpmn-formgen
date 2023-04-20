@@ -1,19 +1,19 @@
 <template>
-    <el-button type="primary" @click="showEditFormDialog()">新增表单</el-button>
+    <el-button type="primary" @click="openFormDesignerDialog()">新增表单</el-button>
     <el-table :data="formList" border style="width: 100%">
         <el-table-column prop="key" label="表单名称" width="180" />
         <el-table-column label="操作" width="180">
             <template #default="props">
-                <el-button type="primary" @click="showEditFormDialog(props.row)">编辑</el-button>
+                <el-button type="primary" @click="openFormDesignerDialog(props.row)">编辑</el-button>
             </template>
         </el-table-column>
     </el-table>
-    <el-dialog v-model="dialogVisible" title="表单设计器" @close="handleClose" style="width: 80%; height: 80%">
+    <el-dialog v-model="dialogVisible" title="表单设计器" @opened = "handleOpen"  @closed="handleClose" style="width: 80%; height: 80%">
         <fc-designer ref="designer"/>
         <template #footer>
             <span class="dialog-footer">
                 表单名称：
-                <el-input v-model="editingForm.formKey" placeholder="请输入表单名称" style="width: 200px; margin-right: 20px"/>
+                <el-input v-model="dialogData.formName" placeholder="请输入表单名称" style="width: 200px; margin-right: 20px"/>
                 <el-button @click="dialogVisible = false">取消</el-button>
                 <el-button type="primary" @click="exportForm">保存表单</el-button>
             </span>
@@ -27,15 +27,14 @@ export default {
     },
     data() {
         return {
-            formName: "",
             formList: [],
             selectForm: null,
             dialogVisible: false,
-            editingForm: {
-                formId: null,
-                formKey: null
-            },
-            fromDesigner: null
+            fromDesigner: null,
+            dialogData: {
+                formName: null,
+                fromDesignerData: null
+            }
         }
     },
     mounted() {
@@ -65,20 +64,25 @@ export default {
                 this.formList = response.data;
             });
         },
-        showEditFormDialog(rowData) {
+        openFormDesignerDialog(rowData) {
             this.dialogVisible = true;
-            console.log(rowData)
             if (rowData != null) {
-                this.editingForm.formId = rowData.id;
-                this.editingForm.formKey = rowData.key;
-                const selectForm = JSON.parse(rowData.value);
-                this.$refs.designer.setRule(selectForm.formRule);
-                this.$refs.designer.setOption(selectForm.formOptions);
+                this.dialogData.fromDesignerData = rowData.value;
+                this.dialogData.formName = rowData.key;
             }
         },
+        closeFormDesignerDialog() {
+            this.dialogVisible = false;
+        },
+        handleOpen() {
+            console.log("handleOpen")
+            const selectForm = JSON.parse(this.dialogData.fromDesignerData);
+            this.$refs.designer.setRule(selectForm.formRule);
+            this.$refs.designer.setOption(selectForm.formOptions);
+        },
         handleClose() {
-            this.editingForm.formId = null;
-            this.editingForm.formKey = null;
+            console.log("handleClose");
+            this.dialogData.fromDesignerData = {};
             this.$refs.designer.clearActiveRule();
             this.$refs.designer.clearDragRule();
         }
