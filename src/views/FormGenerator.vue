@@ -5,7 +5,7 @@
         <el-table-column label="操作" width="380">
             <template #default="props">
                 <el-button type="primary" @click="openFormDesignerDialog(props.row)">编辑表单</el-button>
-                <el-button type="primary" @click="openFormDesignerDialog(props.row)">使用表单</el-button>
+                <el-button type="primary" @click="openFormParserDialog(props.row)">使用表单</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -20,6 +20,11 @@
             </span>
         </template>
     </el-dialog>
+
+    <el-dialog v-model="formParserDialogVisible" title="表单设计器">
+        <form-create :rule="formParserDialogData.rule" :option="formParserDialogData.options" />
+    </el-dialog>
+
 </template>
 
 <script>
@@ -36,6 +41,12 @@ export default {
                 formId: null,
                 formName: null,
                 fromDesignerData: null
+            },
+            formParserDialogVisible: false,
+            formParserDialogData: {
+                rule: [],
+                options: {},
+                formValue: {}
             }
         }
     },
@@ -100,7 +111,15 @@ export default {
             this.$refs.designer.clearActiveRule();
             this.$refs.designer.clearDragRule();
             this.loadAllForm();
-        }
+        },
+        openFormParserDialog(rowData) {
+            this.formParserDialogVisible = true;
+            if (rowData != null) {
+                const selectForm = JSON.parse(rowData.value);
+                this.formParserDialogData.rule = selectForm.formRule;
+                this.formParserDialogData.options = selectForm.formOptions;
+            }
+        },
     }
 }
 </script>
