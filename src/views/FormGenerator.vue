@@ -21,7 +21,7 @@
         </template>
     </el-dialog>
 
-    <el-dialog v-model="formParserDialogVisible" title="表单设计器">
+    <el-dialog v-model="formParserDialogVisible" title="表单解析器">
         <form-create :rule="formParserDialogData.rule" :option="formParserDialogData.options" />
     </el-dialog>
 
