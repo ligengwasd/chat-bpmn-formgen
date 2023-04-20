@@ -30,7 +30,7 @@ export default {
             }
             const param = {
                 "type": "form",
-                "key": data().formName,
+                "key": this.formName,
                 "value": JSON.stringify(bizConfigValue)
             }
             console.log(param);
