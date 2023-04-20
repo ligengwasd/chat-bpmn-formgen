@@ -2,9 +2,9 @@
     <el-button type="primary" @click="openFormDesignerDialog()">新增表单</el-button>
     <el-table :data="formList" border style="width: 100%">
         <el-table-column prop="key" label="表单名称" width="180" />
-        <el-table-column label="操作" width="180">
+        <el-table-column label="操作" width="380">
             <template #default="props">
-                <el-button type="primary" @click="openFormDesignerDialog(props.row)">编辑</el-button>
+                <el-button type="primary" @click="openFormDesignerDialog(props.row)">编辑表单</el-button>
                 <el-button type="primary" @click="openFormDesignerDialog(props.row)">使用表单</el-button>
             </template>
         </el-table-column>
