@@ -8,7 +8,7 @@
             </template>
         </el-table-column>
     </el-table>
-    <el-dialog v-model="dialogVisible" title="表单设计器" @opened = "handleOpen"  @closed="handleClose" style="width: 80%; height: 80%">
+    <el-dialog v-model="dialogVisible" title="表单设计器" @opened = "handleOpen"  @closed="handleClose" style="width: 100%; height: 100%">
         <fc-designer ref="designer"/>
         <template #footer>
             <span class="dialog-footer">
