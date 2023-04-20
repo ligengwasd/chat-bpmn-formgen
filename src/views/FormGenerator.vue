@@ -1,4 +1,24 @@
 <template>
+    <el-table
+        :data="formList"
+        style="width: 100%">
+        <el-table-column
+            prop="type"
+            label="日期"
+            width="180">
+        </el-table-column>
+        <el-table-column
+            prop="key"
+            label="姓名"
+            width="180">
+        </el-table-column>
+        <el-table-column
+            prop="address"
+            label="地址">
+        </el-table-column>
+    </el-table>
+
+
     <el-row :gutter="20">
         <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="6">
