@@ -24,12 +24,18 @@ export default {
     },
     methods: {
         exportForm() {
-            const json = this.$refs.designer.getJson();
-            const param = {
-                taskId: "f7d1bd9d-ddcf-11ed-af9f-c67be54432b8",
-                message:json
+            const bizConfigValue = {
+                "formRule": this.$refs.designer.getRule(),
+                "formOptions": this.$refs.designer.getOption()
             }
-            this.$http.post('/task/f7d1bd9d-ddcf-11ed-af9f-c67be54432b8/comment/create', param).then(response => {
+            const param = {
+                "type": "form",
+                "key": data().formName,
+                "value": JSON.stringify(bizConfigValue)
+            }
+            console.log(param);
+            // this.$http.post('/task/1/comment/create', param).then(response => {
+            this.$http.post('/bizConfig', param).then(response => {
                 console.log(response.data);
             }) .catch(error => {
                 console.log(error);

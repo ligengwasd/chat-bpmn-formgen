@@ -44,6 +44,6 @@ app.use(TUIKit)
     .use(FcDesigner)
     .mount('#app');
 
-
-axios.defaults.baseURL = 'http://localhost:8082/engine-rest/';
+// camunda的restapi地址engine-rest
+axios.defaults.baseURL = 'http://localhost:8082/';
 app.config.globalProperties.$http = axios
