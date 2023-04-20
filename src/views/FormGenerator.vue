@@ -8,7 +8,6 @@
             </template>
         </el-table-column>
     </el-table>
-    {{editingForm}}
     <el-dialog v-model="dialogVisible" title="表单设计器" @close="handleClose" style="width: 80%; height: 80%">
         <fc-designer ref="designer"/>
         <template #footer>
@@ -35,7 +34,8 @@ export default {
             editingForm: {
                 formId: null,
                 formKey: null
-            }
+            },
+            fromDesigner: null
         }
     },
     mounted() {
@@ -67,6 +67,7 @@ export default {
         },
         showEditFormDialog(rowData) {
             this.dialogVisible = true;
+            console.log(rowData)
             if (rowData != null) {
                 this.editingForm.formId = rowData.id;
                 this.editingForm.formKey = rowData.key;
@@ -79,8 +80,7 @@ export default {
             this.editingForm.formId = null;
             this.editingForm.formKey = null;
             this.$refs.designer.clearActiveRule();
-            // this.$refs.designer.setRule([]);
-            // this.$refs.designer.setOption(null);
+            this.$refs.designer.clearDragRule();
         }
     }
 }
