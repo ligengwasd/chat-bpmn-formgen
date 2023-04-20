@@ -32,6 +32,7 @@ export default {
             selectForm: null,
             dialogVisible: false,
             dialogData: {
+                formId: null,
                 formName: null,
                 fromDesignerData: null
             }
@@ -48,15 +49,22 @@ export default {
             }
             const param = {
                 "type": "form",
-                "key": this.formName,
+                "key": this.dialogData.formName,
                 "value": JSON.stringify(bizConfigValue)
             }
-            console.log(param);
-            this.$http.post('/bizConfig', param).then(response => {
-                console.log(response.data);
-            }) .catch(error => {
-                console.log(error);
-            });
+            if (this.dialogData.formId == null) {
+                this.$http.post('/bizConfig', param).then(response => {
+                    console.log(response.data);
+                }) .catch(error => {
+                    console.log(error);
+                });
+            } else {
+                this.$http.put('/bizConfig/'.concat(this.dialogData.formId), param).then(response => {
+                    console.log(response.data);
+                }) .catch(error => {
+                    console.log(error);
+                });
+            }
         },
         loadAllForm() {
             this.$http.get('/bizConfig/list').then(response => {
@@ -69,6 +77,7 @@ export default {
             if (rowData != null) {
                 this.dialogData.fromDesignerData = rowData.value;
                 this.dialogData.formName = rowData.key;
+                this.dialogData.formId = rowData.id;
             }
         },
         closeFormDesignerDialog() {
