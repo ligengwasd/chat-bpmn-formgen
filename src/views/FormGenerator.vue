@@ -31,7 +31,6 @@ export default {
     data() {
         return {
             formList: [],
-            selectForm: null,
             dialogVisible: false,
             dialogData: {
                 formId: null,
@@ -95,7 +94,9 @@ export default {
         },
         handleClose() {
             console.log("handleClose");
-            this.dialogData.fromDesignerData = {};
+            this.dialogData.fromDesignerData = null;
+            this.dialogData.formName = null;
+            this.dialogData.formId = null;
             this.$refs.designer.clearActiveRule();
             this.$refs.designer.clearDragRule();
             this.loadAllForm();
