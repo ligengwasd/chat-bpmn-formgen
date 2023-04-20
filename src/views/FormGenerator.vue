@@ -1,12 +1,30 @@
 <template>
     <el-row :gutter="20">
+        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :span="6">
+            <el-select v-model="selectForm" placeholder="请选择">
+                <el-option
+                    v-for="item in formList"
+                    :key="item.key"
+                    :label="item.key"
+                    :value="item.value">
+                </el-option>
+            </el-select>
+        </el-col>
+        <el-col :span="6">
+            <el-button type="primary" @click="exportForm()">导入表单</el-button>
+        </el-col>
+        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+    </el-row>
+    <br>
+    <el-row :gutter="20">
+        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="6">
             <el-input v-model="formName" placeholder="请输入表单名称"></el-input>
         </el-col>
         <el-col :span="6">
-            <el-button type="primary" @click="exportForm()">创建表单</el-button>
+            <el-button type="primary" @click="exportForm()">保存表单</el-button>
         </el-col>
-        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
     </el-row>
     <br>
@@ -17,10 +35,17 @@
 
 <script>
 export default {
+    setup() {
+    },
     data() {
         return {
-            formName:""
+            formName: "",
+            formList: [],
+            selectForm: null
         }
+    },
+    mounted() {
+        this.loadAllForm()
     },
     methods: {
         exportForm() {
@@ -41,6 +66,12 @@ export default {
                 console.log(error);
             });
         },
+        loadAllForm() {
+            this.$http.get('/bizConfig/list').then(response => {
+                console.log(response.data);
+                this.formList = response.data;
+            });
+        }
     }
 }
 </script>
