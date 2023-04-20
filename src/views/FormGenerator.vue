@@ -7,30 +7,15 @@
             </template>
         </el-table-column>
     </el-table>
-<!--    <br>-->
-<!--    <el-row :gutter="20">-->
-<!--        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>-->
-<!--        <el-col :span="6">-->
-<!--            <el-input v-model="formName" placeholder="请输入表单名称"></el-input>-->
-<!--        </el-col>-->
-<!--        <el-col :span="6">-->
-<!--            <el-button type="primary" @click="exportForm()">保存表单</el-button>-->
-<!--        </el-col>-->
-<!--        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>-->
-<!--    </el-row>-->
-
     <el-dialog v-model="dialogVisible" title="表单设计器" :before-close="handleClose" style="width: 80%; height: 80%">
         <fc-designer ref="designer"/>
         <template #footer>
             <span class="dialog-footer">
-                <el-button @click="dialogVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+                <el-button @click="dialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="exportForm">保存表单</el-button>
             </span>
         </template>
     </el-dialog>
-
-
-
 </template>
 
 <script>
@@ -75,11 +60,6 @@ export default {
         showEditFormDialog(rowData) {
             this.dialogVisible = true;
             const selectForm = JSON.parse(rowData.value);
-            this.$refs.designer.setRule(selectForm.formRule);
-            this.$refs.designer.setOption(selectForm.formOptions);
-        },
-        selectChange() {
-            const selectForm = JSON.parse(this.selectForm);
             this.$refs.designer.setRule(selectForm.formRule);
             this.$refs.designer.setOption(selectForm.formOptions);
         }
