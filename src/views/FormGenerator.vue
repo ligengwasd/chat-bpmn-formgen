@@ -1,16 +1,8 @@
 <template>
-    <el-table :data="formList" style="width: 100%">
-        <el-table-column prop="key" label="姓名" width="180"></el-table-column>
-        <el-table-column
-            label="操作">
-        </el-table-column>
-    </el-table>
-
-
     <el-row :gutter="20">
         <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="6">
-            <el-select v-model="selectForm" placeholder="请选择">
+            <el-select v-model="selectForm" placeholder="请选择" @change="selectChange">
                 <el-option
                     v-for="item in formList"
                     :key="item.key"
@@ -20,7 +12,7 @@
             </el-select>
         </el-col>
         <el-col :span="6">
-            <el-button type="primary" @click="exportForm()">导入表单</el-button>
+            <el-button type="primary" @click="exportForm()">编辑所选中表单</el-button>
         </el-col>
         <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
     </el-row>
@@ -79,6 +71,11 @@ export default {
                 console.log(response.data);
                 this.formList = response.data;
             });
+        },
+        selectChange() {
+            const selectForm = JSON.parse(this.selectForm);
+            this.$refs.designer.setRule(selectForm.formRule);
+            this.$refs.designer.setOption(selectForm.formOptions);
         }
     }
 }
