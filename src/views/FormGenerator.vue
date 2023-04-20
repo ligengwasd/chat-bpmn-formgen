@@ -1,4 +1,5 @@
 <template>
+    <el-button type="primary" @click="showEditFormDialog()">新增表单</el-button>
     <el-table :data="formList" border style="width: 100%">
         <el-table-column prop="key" label="表单名称" width="180" />
         <el-table-column label="操作" width="180">
@@ -7,10 +8,13 @@
             </template>
         </el-table-column>
     </el-table>
-    <el-dialog v-model="dialogVisible" title="表单设计器" :before-close="handleClose" style="width: 80%; height: 80%">
+    {{editingForm}}
+    <el-dialog v-model="dialogVisible" title="表单设计器" @close="handleClose" style="width: 80%; height: 80%">
         <fc-designer ref="designer"/>
         <template #footer>
             <span class="dialog-footer">
+                表单名称：
+                <el-input v-model="editingForm.formKey" placeholder="请输入表单名称" style="width: 200px; margin-right: 20px"/>
                 <el-button @click="dialogVisible = false">取消</el-button>
                 <el-button type="primary" @click="exportForm">保存表单</el-button>
             </span>
@@ -27,7 +31,11 @@ export default {
             formName: "",
             formList: [],
             selectForm: null,
-            dialogVisible: false
+            dialogVisible: false,
+            editingForm: {
+                formId: null,
+                formKey: null
+            }
         }
     },
     mounted() {
@@ -59,9 +67,20 @@ export default {
         },
         showEditFormDialog(rowData) {
             this.dialogVisible = true;
-            const selectForm = JSON.parse(rowData.value);
-            this.$refs.designer.setRule(selectForm.formRule);
-            this.$refs.designer.setOption(selectForm.formOptions);
+            if (rowData != null) {
+                this.editingForm.formId = rowData.id;
+                this.editingForm.formKey = rowData.key;
+                const selectForm = JSON.parse(rowData.value);
+                this.$refs.designer.setRule(selectForm.formRule);
+                this.$refs.designer.setOption(selectForm.formOptions);
+            }
+        },
+        handleClose() {
+            this.editingForm.formId = null;
+            this.editingForm.formKey = null;
+            this.$refs.designer.clearActiveRule();
+            // this.$refs.designer.setRule([]);
+            // this.$refs.designer.setOption(null);
         }
     }
 }
