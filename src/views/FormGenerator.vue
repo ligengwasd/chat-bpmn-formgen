@@ -5,6 +5,7 @@
         <el-table-column label="操作" width="180">
             <template #default="props">
                 <el-button type="primary" @click="openFormDesignerDialog(props.row)">编辑</el-button>
+                <el-button type="primary" @click="openFormDesignerDialog(props.row)">使用表单</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -14,7 +15,7 @@
             <span class="dialog-footer">
                 表单名称：
                 <el-input v-model="dialogData.formName" placeholder="请输入表单名称" style="width: 200px; margin-right: 20px"/>
-                <el-button @click="dialogVisible = false">取消</el-button>
+                <el-button @click="closeFormDesignerDialog()">取消</el-button>
                 <el-button type="primary" @click="exportForm">保存表单</el-button>
             </span>
         </template>
