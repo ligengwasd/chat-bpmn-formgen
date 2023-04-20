@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { ElMessage } from 'element-plus'
+
 export default {
     setup() {
     },
@@ -65,6 +67,8 @@ export default {
                     console.log(error);
                 });
             }
+            ElMessage({message: '操作成功', type: 'success',})
+            this.dialogVisible = false;
         },
         loadAllForm() {
             this.$http.get('/bizConfig/list').then(response => {
@@ -94,6 +98,7 @@ export default {
             this.dialogData.fromDesignerData = {};
             this.$refs.designer.clearActiveRule();
             this.$refs.designer.clearDragRule();
+            this.loadAllForm();
         }
     }
 }
