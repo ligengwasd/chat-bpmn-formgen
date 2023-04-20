@@ -31,7 +31,6 @@ export default {
             formList: [],
             selectForm: null,
             dialogVisible: false,
-            fromDesigner: null,
             dialogData: {
                 formName: null,
                 fromDesignerData: null
