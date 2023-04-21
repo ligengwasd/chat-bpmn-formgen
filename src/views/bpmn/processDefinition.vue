@@ -57,6 +57,7 @@ export default {
                 this.bpmnViewer = new BpmnViewer({container: '#bpmnCanvas'});
                 this.bpmnViewer.importXML(xmlData);
                 // this.bpmnViewer.get('bpmnCanvas').zoom('fit-viewport');
+                // this.bpmnViewer.get('bpmnCanvas').scroll('center');
             })
         },
         handleClose() {
