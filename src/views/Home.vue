@@ -5,22 +5,27 @@
         </el-header>
         <el-container>
             <el-aside width="200px">
-                <el-menu>
-                    <el-menu-item index="/home/chat">
-                        <router-link to="/home/chat">即时通信</router-link>
-                    </el-menu-item>
-                    <el-menu-item index="/home/formGenerator">
-                        <router-link to="/home/formGenerator">表单设计器</router-link>
-                    </el-menu-item>
-                    <el-menu-item index="/home/formParser">
-                        <router-link to="/home/formParser">表单解析器</router-link>
-                    </el-menu-item>
-                    <el-menu-item index="/home/bpmnDesign">
-                        <router-link to="/home/bpmnDesign">流程设计器</router-link>
-                    </el-menu-item>
-                    <el-menu-item index="/home/bpmn/processDefinition">
-                        <router-link to="/home/bpmn/processDefinition">流程定义</router-link>
-                    </el-menu-item>
+                <el-menu :default-active="$route.path">
+                    <router-link to="/home/chat">
+                        <el-menu-item index="/home/chat">即时通信</el-menu-item>
+                    </router-link>
+                    <router-link to="/home/formGenerator">
+                        <el-menu-item index="/home/formGenerator">表单引擎</el-menu-item>
+                    </router-link>
+                    <el-sub-menu>
+                        <template #title>
+                            <span>流程引擎</span>
+                        </template>
+                        <router-link to="/home/bpmn/processDefinition">
+                            <el-menu-item index="/home/bpmn/processDefinition">流程定义</el-menu-item>
+                        </router-link>
+                    </el-sub-menu>
+<!--                    <el-menu-item index="/home/formParser">-->
+<!--                        <router-link to="/home/formParser">表单解析器</router-link>-->
+<!--                    </el-menu-item>-->
+<!--                    <el-menu-item index="/home/bpmnDesign">-->
+<!--                        <router-link to="/home/bpmnDesign">流程设计器</router-link>-->
+<!--                    </el-menu-item>-->
                 </el-menu>
             </el-aside>
             <el-container>
