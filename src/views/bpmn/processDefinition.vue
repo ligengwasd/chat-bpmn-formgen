@@ -1,5 +1,5 @@
 <template>
-    {{bpmnViewerData}}
+    {{bpmnViewerDialogData}}
 
     <el-table :data="deploymentList" border style="width: 100%">
         <el-table-column prop="id" label="主键" />
@@ -14,7 +14,7 @@
         </el-table-column>
     </el-table>
 
-    <el-dialog v-model="bpmnViewerDialogVisible" title="流程查看" @opened = "handleOpen" style="width: 100%; height: 100%">
+    <el-dialog v-model="bpmnViewerDialogVisible" title="流程查看" @opened = "handleOpen" @closed="handleClose" style="width: 80%; height: 70%">
         <div id="bpmnCanvas" style="border: 1px solid green;height: 500px;"></div>
     </el-dialog>
 </template>
@@ -32,7 +32,8 @@ export default {
             bpmnViewerDialogVisible: false,
             bpmnViewerDialogData: {
                 processDefinitionId: null
-            }
+            },
+            bpmnViewer: null
         }
     },
     mounted() {
@@ -55,17 +56,14 @@ export default {
             this.$http.get(queryResources).then(response => {
                 let xmlData = response.data.bpmn20Xml;
                 console.log("xmlData", xmlData);
-                const bpmnViewer = new BpmnViewer({
-                    container: '#bpmnCanvas'
-                });
-                bpmnViewer.importXML(xmlData);
-                //     .then(function(result) {
-                //     bpmnViewer.get('bpmnCanvas').zoom('fit-viewport');
-                // })
+                this.bpmnViewer = new BpmnViewer({container: '#bpmnCanvas'});
+                this.bpmnViewer.importXML(xmlData);
+                // this.bpmnViewer.get('bpmnCanvas').zoom('fit-viewport');
             })
-
+        },
+        handleClose() {
+            this.bpmnViewer.destroy();
         }
-
     }
 }
 </script>
