@@ -7,21 +7,8 @@
 </template>
 
 <script>
-import BpmnViewer from 'bpmn-js';
-import '../../node_modules/bpmn-js/dist/assets/bpmn-js.css'
-import '../../node_modules/bpmn-js/dist/assets/diagram-js.css'
-import '../../node_modules/bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
-import '../../node_modules/bpmn-js-properties-panel/dist/assets/properties-panel.css'
-import customTranslate from '../bpmnxml/customTranslate';
-
-
-import BpmnModeler from "bpmn-js/lib/Modeler";
-import {
-    BpmnPropertiesPanelModule,
-    BpmnPropertiesProviderModule,
-} from "bpmn-js-properties-panel";
-// import magicPropertiesProviderModule from "./provider/magic/";
-// import magicModdleDescriptor from "./descriptors/magic";
+import BpmnModeler from 'camunda-bpmn-js/lib/camunda-platform/Modeler';
+import 'camunda-bpmn-js/dist/assets/camunda-platform-modeler.css';
 
 
 export default {
@@ -175,25 +162,22 @@ export default {
             '  </bpmndi:BPMNDiagram>\\n' +
             '</definitions>`;
         const bpmnModeler = new BpmnModeler({
-            container: "#js-canvas",
+            container: '#js-canvas',
             propertiesPanel: {
-                parent: "#js-properties-panel",
-            },
-            additionalModules: [
-                BpmnPropertiesPanelModule,
-                BpmnPropertiesProviderModule,
-                {
-                    translate: [ 'value', customTranslate ]
-                }
-                // magicPropertiesProviderModule,
-            ],
-            moddleExtensions: {
-                // magic: magicModdleDescriptor,
-
-            },
+                parent: '#js-properties-panel'
+            }
         });
 
-        bpmnModeler.importXML(diagram);
+        try {
+
+            bpmnModeler.importXML(diagram);
+
+            console.log('success!');
+            bpmnModeler.get('canvas').zoom('fit-viewport');
+        } catch (err) {
+
+            console.error('something went wrong:', err);
+        }
     },
 };
 </script>

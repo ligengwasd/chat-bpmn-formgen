@@ -19,7 +19,7 @@
                         <router-link to="/home/bpmnDesign">流程设计器</router-link>
                     </el-menu-item>
                     <el-menu-item index="/home/bpmn/processDefinition">
-                        <router-link to="/home/bpmn/processDefinition">流程部署</router-link>
+                        <router-link to="/home/bpmn/processDefinition">流程定义</router-link>
                     </el-menu-item>
                 </el-menu>
             </el-aside>
