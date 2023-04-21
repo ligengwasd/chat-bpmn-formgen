@@ -16,8 +16,14 @@
         <div id="bpmnViewerCanvas" style="border: 1px solid green;height: 500px;"></div>
     </el-dialog>
     <el-dialog v-model="bpmnModelerDialogVisible" title="编辑流程" @opened = "handleBpmnModelerDialogOpen" @closed="handleBpmnModelerDialogClose" style="width: 80%; height: 100%">
-        <div id="bpmnModelerCanvas" style="border: 1px solid green;height: 500px;"></div>
-        <div id="bpmnModelerCanvasPropertiesPanel" style="border: 1px solid green;height: 300px;"></div>
+        <el-row>
+            <el-col :span="18">
+                <div id="bpmnModelerCanvas" style="border: 1px solid green;height: 600px;"></div>
+            </el-col>
+            <el-col :span="6">
+                <div id="bpmnModelerCanvasPropertiesPanel" style="border: 1px solid green;height: 600px;"></div>
+            </el-col>
+        </el-row>
     </el-dialog>
 
 </template>
