@@ -11,7 +11,7 @@
     </el-table>
 
     <el-dialog v-model="bpmnViewerDialogVisible" title="查看流程" @opened = "handleBpmnViewerDialogOpen" @closed="handleBpmnViewerDialogClose" style="width: 80%; height: 70%">
-        <div id="bpmnCanvas" style="border: 1px solid green;height: 500px;"></div>
+        <div id="bpmnViewerCanvas" style="border: 1px solid green;height: 500px;"></div>
     </el-dialog>
 
 </template>
@@ -59,7 +59,7 @@ export default {
             this.$http.get(queryResources).then(response => {
                 let xmlData = response.data.bpmn20Xml;
                 console.log("xmlData", xmlData);
-                this.bpmnViewer = new BpmnViewer({container: '#bpmnCanvas'});
+                this.bpmnViewer = new BpmnViewer({container: '#bpmnViewerCanvas'});
                 this.bpmnViewer.importXML(xmlData);
                 // this.bpmnViewer.get('bpmnCanvas').zoom('fit-viewport');
                 // this.bpmnViewer.get('bpmnCanvas').scroll('center');
