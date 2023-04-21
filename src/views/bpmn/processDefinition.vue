@@ -1,9 +1,14 @@
 <template>
-    {{deploymentList}}
     <el-table :data="deploymentList" border style="width: 100%">
-        <el-table-column prop="id" label="主键" width="320" />
-        <el-table-column prop="name" label="名称" width="180" />
-        <el-table-column prop="deploymentTime" label="部署时间" />
+        <el-table-column prop="id" label="主键" />
+        <el-table-column prop="name" label="名称" />
+        <el-table-column prop="key" label="流程key"/>
+        <el-table-column prop="version" label="版本" />
+        <el-table-column prop="deploymentId" label="部署ID" />
+        <el-table-column prop="version" label="操作">
+
+        </el-table-column>
+
     </el-table>
 </template>
 
