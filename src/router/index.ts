@@ -35,9 +35,9 @@ const routes: Array<RouteRecordRaw> = [
           component: () => import('../views/Bpmn.vue')    // 子路由
         },
         {
-          path: '/home/bpmn/deployment',  // 项目 进行中
-          name: 'bpmnDeployment',
-          component: () => import('../views/bpmn/deployment.vue')    // 子路由
+          path: '/home/bpmn/processDefinition',  // 项目 进行中
+          name: 'bpmnProcessDefinition',
+          component: () => import('../views/bpmn/processDefinition.vue')    // 子路由
         }
       ]
     }

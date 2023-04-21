@@ -1,4 +1,5 @@
 <template>
+    {{deploymentList}}
     <el-table :data="deploymentList" border style="width: 100%">
         <el-table-column prop="id" label="主键" width="320" />
         <el-table-column prop="name" label="名称" width="180" />
@@ -21,7 +22,7 @@ export default {
     },
     methods: {
         loadDeploymentList() {
-            this.$http.get('/engine-rest/deployment').then(response => {
+            this.$http.get('/engine-rest/process-definition').then(response => {
                 this.deploymentList = response.data
             }) .catch(error => {
                 console.log(error);
