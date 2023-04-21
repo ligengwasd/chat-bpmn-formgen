@@ -18,6 +18,10 @@
                     <el-menu-item index="/home/bpmnDesign">
                         <router-link to="/home/bpmnDesign">流程设计器</router-link>
                     </el-menu-item>
+
+                    <el-menu-item index="/home/bpmn/deployment">
+                        <router-link to="/home/bpmn/deployment">流程部署</router-link>
+                    </el-menu-item>
                 </el-menu>
             </el-aside>
             <el-container>

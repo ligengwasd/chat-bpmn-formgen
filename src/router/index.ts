@@ -12,27 +12,32 @@ const routes: Array<RouteRecordRaw> = [
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
+      component: () => import('../views/Home.vue'),
       children: [
         {
           path: '/home/chat',  // 项目 进行中
           name: 'Chat',
-          component: () => import(/* webpackChunkName: "about" */ '../views/Chat.vue')    // 子路由
+          component: () => import('../views/Chat.vue')    // 子路由
         },
         {
           path: '/home/formGenerator',  // 项目 进行中
           name: 'formGenerator',
-          component: () => import(/* webpackChunkName: "about" */ '../views/FormGenerator.vue')    // 子路由
+          component: () => import('../views/FormGenerator.vue')    // 子路由
         },
         {
           path: '/home/formParser',  // 项目 进行中
           name: 'formParser',
-          component: () => import(/* webpackChunkName: "about" */ '../views/FormParser.vue')    // 子路由
+          component: () => import('../views/FormParser.vue')    // 子路由
         },
         {
           path: '/home/bpmnDesign',  // 项目 进行中
           name: 'bpmnDesign',
-          component: () => import(/* webpackChunkName: "about" */ '../views/Bpmn.vue')    // 子路由
+          component: () => import('../views/Bpmn.vue')    // 子路由
+        },
+        {
+          path: '/home/bpmn/deployment',  // 项目 进行中
+          name: 'bpmnDeployment',
+          component: () => import('../views/bpmn/deployment.vue')    // 子路由
         }
       ]
     }
