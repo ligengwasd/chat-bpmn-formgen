@@ -5,8 +5,8 @@
         <el-table-column prop="version" label="版本" />
         <el-table-column prop="version" label="操作">
             <template #default="props">
-                <el-button type="primary" @click="loadBpmnXml(props.row)">查看</el-button>
-                <el-button type="primary" @click="loadBpmnXml(props.row)">编辑</el-button>
+                <el-button type="primary" @click="openBpmnViewerDialog(props.row)">查看</el-button>
+                <el-button type="primary" @click="openBpmnModelerDialog(props.row)">编辑</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -14,9 +14,9 @@
     <el-dialog v-model="bpmnViewerDialogVisible" title="查看流程" @opened = "handleBpmnViewerDialogOpen" @closed="handleBpmnViewerDialogClose" style="width: 80%; height: 70%">
         <div id="bpmnViewerCanvas" style="border: 1px solid green;height: 500px;"></div>
     </el-dialog>
-
     <el-dialog v-model="bpmnModelerDialogVisible" title="编辑流程" @opened = "handleBpmnModelerDialogOpen" @closed="handleBpmnModelerDialogClose" style="width: 80%; height: 70%">
         <div id="bpmnModelerCanvas" style="border: 1px solid green;height: 500px;"></div>
+        <div id="bpmnModelerCanvasPropertiesPanel" style="border: 1px solid green;height: 300px;"></div>
     </el-dialog>
 
 </template>
@@ -56,9 +56,13 @@ export default {
                 console.log(error);
             });
         },
-        loadBpmnXml(processDefinition) {
+        openBpmnViewerDialog(processDefinition) {
             this.bpmnViewerDialogData.processDefinitionId = processDefinition.id;
             this.bpmnViewerDialogVisible = true;
+        },
+        openBpmnModelerDialog(processDefinition) {
+            this.bpmnModelerDialogData.processDefinitionId = processDefinition.id;
+            this.bpmnModelerDialogVisible = true;
         },
         handleBpmnViewerDialogOpen() {
             const queryResources = '/engine-rest/process-definition/'.concat(this.bpmnViewerDialogData.processDefinitionId).concat("/xml")
@@ -73,21 +77,18 @@ export default {
             this.bpmnViewerDialogData.processDefinitionId = null;
         },
         handleBpmnModelerDialogOpen() {
-            const queryResources = '/engine-rest/process-definition/'.concat(this.bpmnViewerDialogData.processDefinitionId).concat("/xml")
+            const queryResources = '/engine-rest/process-definition/'.concat(this.bpmnModelerDialogData.processDefinitionId).concat("/xml")
             this.$http.get(queryResources).then(response => {
                 let xmlData = response.data.bpmn20Xml;
-                // this.bpmnViewer = new BpmnViewer({container: '#bpmnModelerCanvas'});
-                // this.bpmnViewer.importXML(xmlData);
-
-                const bpmnModeler = new BpmnModeler({
+                this.bpmnModeler = new BpmnModeler({
                     container: '#bpmnModelerCanvas',
                     propertiesPanel: {
                         parent: '#bpmnModelerCanvasPropertiesPanel'
                     }
                 });
                 try {
-                    bpmnModeler.importXML(xmlData);
-                    bpmnModeler.get('canvas').zoom('fit-viewport');
+                    this.bpmnModeler.importXML(xmlData);
+                    this.bpmnModeler.get('canvas').zoom('fit-viewport');
                 } catch (err) {
                     console.error('something went wrong:', err);
                 }
