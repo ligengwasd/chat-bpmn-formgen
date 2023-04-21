@@ -80,6 +80,9 @@ export default {
             this.bpmnViewerDialogData.processDefinitionId = null;
         },
         handleBpmnModelerDialogOpen() {
+            if (this.bpmnModelerDialogData.processDefinitionId == null) {
+                return;
+            }
             const queryResources = '/engine-rest/process-definition/'.concat(this.bpmnModelerDialogData.processDefinitionId).concat("/xml")
             this.$http.get(queryResources).then(response => {
                 let xmlData = response.data.bpmn20Xml;
