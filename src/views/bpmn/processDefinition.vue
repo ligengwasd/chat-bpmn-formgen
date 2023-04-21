@@ -37,7 +37,8 @@ export default {
     },
     methods: {
         loadDeploymentList() {
-            this.$http.get('/engine-rest/process-definition').then(response => {
+            const params = {params: {"latestVersion": true}};
+            this.$http.get('/engine-rest/process-definition', params).then(response => {
                 this.deploymentList = response.data
             }) .catch(error => {
                 console.log(error);
