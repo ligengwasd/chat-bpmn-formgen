@@ -14,7 +14,7 @@
     <el-dialog v-model="bpmnViewerDialogVisible" title="查看流程" @opened = "handleBpmnViewerDialogOpen" @closed="handleBpmnViewerDialogClose" style="width: 80%; height: 70%">
         <div id="bpmnViewerCanvas" style="border: 1px solid green;height: 500px;"></div>
     </el-dialog>
-    <el-dialog v-model="bpmnModelerDialogVisible" title="编辑流程" @opened = "handleBpmnModelerDialogOpen" @closed="handleBpmnModelerDialogClose" style="width: 80%; height: 70%">
+    <el-dialog v-model="bpmnModelerDialogVisible" title="编辑流程" @opened = "handleBpmnModelerDialogOpen" @closed="handleBpmnModelerDialogClose" style="width: 80%; height: 100%">
         <div id="bpmnModelerCanvas" style="border: 1px solid green;height: 500px;"></div>
         <div id="bpmnModelerCanvasPropertiesPanel" style="border: 1px solid green;height: 300px;"></div>
     </el-dialog>
@@ -24,6 +24,7 @@
 <script>
 import BpmnViewer from 'camunda-bpmn-js/lib/camunda-platform/Viewer';
 import BpmnModeler from 'camunda-bpmn-js/lib/camunda-platform/Modeler';
+import 'camunda-bpmn-js/dist/assets/camunda-platform-modeler.css';
 
 export default {
     setup() {
