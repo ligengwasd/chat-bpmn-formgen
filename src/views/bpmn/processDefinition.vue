@@ -1,4 +1,5 @@
 <template>
+    <el-button type="primary" @click="openBpmnModelerDialog()">新建</el-button>
     <el-table :data="deploymentList" border style="width: 100%">
         <el-table-column prop="name" label="名称" />
         <el-table-column prop="key" label="流程key"/>
@@ -79,26 +80,23 @@ export default {
             this.bpmnViewer.destroy();
             this.bpmnViewerDialogData.processDefinitionId = null;
         },
-        handleBpmnModelerDialogOpen() {
-            if (this.bpmnModelerDialogData.processDefinitionId == null) {
-                return;
+        async handleBpmnModelerDialogOpen() {
+            let xmlData;
+            if (this.bpmnModelerDialogData.processDefinitionId != null) {
+                const queryResources = '/engine-rest/process-definition/'.concat(this.bpmnModelerDialogData.processDefinitionId).concat("/xml")
+                await this.$http.get(queryResources).then(response => {
+                    xmlData = response.data.bpmn20Xml;
+                })
             }
-            const queryResources = '/engine-rest/process-definition/'.concat(this.bpmnModelerDialogData.processDefinitionId).concat("/xml")
-            this.$http.get(queryResources).then(response => {
-                let xmlData = response.data.bpmn20Xml;
-                this.bpmnModeler = new BpmnModeler({
-                    container: '#bpmnModelerCanvas',
-                    propertiesPanel: {
-                        parent: '#bpmnModelerCanvasPropertiesPanel'
-                    }
-                });
-                try {
-                    this.bpmnModeler.importXML(xmlData);
-                    this.bpmnModeler.get('canvas').zoom('fit-viewport');
-                } catch (err) {
-                    console.error('something went wrong:', err);
+            this.bpmnModeler = new BpmnModeler({
+                container: '#bpmnModelerCanvas',
+                propertiesPanel: {
+                    parent: '#bpmnModelerCanvasPropertiesPanel'
                 }
-            })
+            });
+            if (xmlData != null) {
+                this.bpmnModeler.importXML(xmlData);
+            }
         },
         handleBpmnModelerDialogClose() {
             this.bpmnModeler.destroy();
