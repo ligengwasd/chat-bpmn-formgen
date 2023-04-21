@@ -96,6 +96,21 @@ export default {
             });
             if (xmlData != null) {
                 this.bpmnModeler.importXML(xmlData);
+            } else {
+                this.bpmnModeler.importXML("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                    "<bpmn:definitions xmlns:bpmn=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:dc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:modeler=\"http://camunda.org/schema/modeler/1.0\" id=\"Definitions_0qynyjh\" targetNamespace=\"http://bpmn.io/schema/bpmn\" exporter=\"Camunda Modeler\" exporterVersion=\"5.10.0\" modeler:executionPlatform=\"Camunda Platform\" modeler:executionPlatformVersion=\"7.19.0\">\n" +
+                    "  <bpmn:process id=\"Process_0bjr816\" isExecutable=\"true\">\n" +
+                    "    <bpmn:startEvent id=\"StartEvent_1\" />\n" +
+                    "  </bpmn:process>\n" +
+                    "  <bpmndi:BPMNDiagram id=\"BPMNDiagram_1\">\n" +
+                    "    <bpmndi:BPMNPlane id=\"BPMNPlane_1\" bpmnElement=\"Process_0bjr816\">\n" +
+                    "      <bpmndi:BPMNShape id=\"_BPMNShape_StartEvent_2\" bpmnElement=\"StartEvent_1\">\n" +
+                    "        <dc:Bounds x=\"152\" y=\"79\" width=\"36\" height=\"36\" />\n" +
+                    "      </bpmndi:BPMNShape>\n" +
+                    "    </bpmndi:BPMNPlane>\n" +
+                    "  </bpmndi:BPMNDiagram>\n" +
+                    "</bpmn:definitions>\n"
+                );
             }
         },
         handleBpmnModelerDialogClose() {
