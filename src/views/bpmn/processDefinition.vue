@@ -5,14 +5,15 @@
         <el-table-column prop="version" label="版本" />
         <el-table-column prop="version" label="操作">
             <template #default="props">
-                <el-button type="primary" @click="loadBpmnXml(props.row)">查看流程定义</el-button>
+                <el-button type="primary" @click="loadBpmnXml(props.row)">查看</el-button>
             </template>
         </el-table-column>
     </el-table>
 
-    <el-dialog v-model="bpmnViewerDialogVisible" title="查看流程" @opened = "handleOpen" @closed="handleClose" style="width: 80%; height: 70%">
+    <el-dialog v-model="bpmnViewerDialogVisible" title="查看流程" @opened = "handleBpmnViewerDialogOpen" @closed="handleBpmnViewerDialogClose" style="width: 80%; height: 70%">
         <div id="bpmnCanvas" style="border: 1px solid green;height: 500px;"></div>
     </el-dialog>
+
 </template>
 
 <script>
@@ -29,7 +30,12 @@ export default {
             bpmnViewerDialogData: {
                 processDefinitionId: null
             },
-            bpmnViewer: null
+            bpmnViewer: null,
+            bpmnModelerDialogVisible: false,
+            bpmnModelerDialogData: {
+                processDefinitionId: null
+            },
+            bpmnModeler: null
         }
     },
     mounted() {
@@ -48,7 +54,7 @@ export default {
             this.bpmnViewerDialogData.processDefinitionId = processDefinition.id;
             this.bpmnViewerDialogVisible = true;
         },
-        handleOpen() {
+        handleBpmnViewerDialogOpen() {
             const queryResources = '/engine-rest/process-definition/'.concat(this.bpmnViewerDialogData.processDefinitionId).concat("/xml")
             this.$http.get(queryResources).then(response => {
                 let xmlData = response.data.bpmn20Xml;
@@ -59,8 +65,9 @@ export default {
                 // this.bpmnViewer.get('bpmnCanvas').scroll('center');
             })
         },
-        handleClose() {
+        handleBpmnViewerDialogClose() {
             this.bpmnViewer.destroy();
+            this.bpmnViewerDialogData.processDefinitionId = null;
         }
     }
 }
