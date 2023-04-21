@@ -26,6 +26,8 @@
 import BpmnViewer from 'camunda-bpmn-js/lib/camunda-platform/Viewer';
 import BpmnModeler from 'camunda-bpmn-js/lib/camunda-platform/Modeler';
 import 'camunda-bpmn-js/dist/assets/camunda-platform-modeler.css';
+import customTranslate from '../../bpmnxml/customTranslate';
+
 
 export default {
     setup() {
@@ -92,7 +94,12 @@ export default {
                 container: '#bpmnModelerCanvas',
                 propertiesPanel: {
                     parent: '#bpmnModelerCanvasPropertiesPanel'
-                }
+                },
+                additionalModules: [
+                    {
+                        translate: [ 'value', customTranslate ]
+                    }
+                ]
             });
             if (xmlData != null) {
                 this.bpmnModeler.importXML(xmlData);
