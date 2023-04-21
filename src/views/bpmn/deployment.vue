@@ -1,5 +1,4 @@
 <template>
-    {{deploymentList}}
     <el-table :data="deploymentList" border style="width: 100%">
         <el-table-column prop="id" label="主键" width="320" />
         <el-table-column prop="name" label="名称" width="180" />
