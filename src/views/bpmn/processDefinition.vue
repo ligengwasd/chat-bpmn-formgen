@@ -62,7 +62,9 @@ export default {
             this.bpmnViewerDialogVisible = true;
         },
         openBpmnModelerDialog(processDefinition) {
-            this.bpmnModelerDialogData.processDefinitionId = processDefinition.id;
+            if (processDefinition != null) {
+                this.bpmnModelerDialogData.processDefinitionId = processDefinition.id;
+            }
             this.bpmnModelerDialogVisible = true;
         },
         handleBpmnViewerDialogOpen() {
