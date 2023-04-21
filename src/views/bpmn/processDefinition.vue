@@ -12,7 +12,7 @@
         </el-table-column>
     </el-table>
 
-    <el-dialog v-model="bpmnViewerDialogVisible" title="流程查看" @opened = "handleOpen" @closed="handleClose" style="width: 80%; height: 70%">
+    <el-dialog v-model="bpmnViewerDialogVisible" title="查看流程" @opened = "handleOpen" @closed="handleClose" style="width: 80%; height: 70%">
         <div id="bpmnCanvas" style="border: 1px solid green;height: 500px;"></div>
     </el-dialog>
 </template>
