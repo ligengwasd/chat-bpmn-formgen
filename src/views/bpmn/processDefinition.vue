@@ -1,6 +1,4 @@
 <template>
-    {{bpmnViewerDialogData}}
-
     <el-table :data="deploymentList" border style="width: 100%">
         <el-table-column prop="id" label="主键" />
         <el-table-column prop="name" label="名称" />
