@@ -7,7 +7,7 @@ export default {
     'External task': '外部任务',
     'Job execution': '作业执行情况',
     'Execution listeners': '执行侦听器',
-    'Extension properties': '执行财产',
+    'Extension properties': '扩展属性',
     'Time to live': '生存时间',
     // Labels
     'Activate the global connect tool': '激活全局连接工具',
