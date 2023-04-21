@@ -1,10 +1,8 @@
 <template>
     <el-table :data="deploymentList" border style="width: 100%">
-        <el-table-column prop="id" label="主键" />
         <el-table-column prop="name" label="名称" />
         <el-table-column prop="key" label="流程key"/>
         <el-table-column prop="version" label="版本" />
-        <el-table-column prop="deploymentId" label="部署ID" />
         <el-table-column prop="version" label="操作">
             <template #default="props">
                 <el-button type="primary" @click="loadBpmnXml(props.row)">查看流程定义</el-button>
