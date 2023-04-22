@@ -142,23 +142,21 @@ export default {
             });
         },
         async saveProcessDef() {
-            const options = { format: true };
+            const options = { format: false };
             const xmlData = await this.bpmnModeler.saveXML(options);
-            const createDeployUrl = "/engine-rest/deployment/create";
-            const formData = new FormData();
-            formData.append("data", JSON.stringify(xmlData));
-            console.log("xmlData", xmlData)
-            await this.$http.post(createDeployUrl, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                }
-            })
+            const createDeployUrl = "bpmn/deployment/create";
+            const param = {
+                "bpmnXmlStr": xmlData.xml
+            };
+            this.$http.post(createDeployUrl, param)
             .then(response => {
-                console.log(response.data);
+                console.log("deploymentId:", response.data);
+                this.loadDeploymentList();
             })
             .catch(error => {
                 console.error(error);
             });
+
         }
     }
 }
