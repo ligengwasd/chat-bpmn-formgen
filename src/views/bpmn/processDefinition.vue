@@ -147,6 +147,7 @@ export default {
             const createDeployUrl = "/engine-rest/deployment/create";
             const formData = new FormData();
             formData.append("data", JSON.stringify(xmlData));
+            console.log("xmlData", xmlData)
             await this.$http.post(createDeployUrl, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
