@@ -141,14 +141,23 @@ export default {
                 this.loadDeploymentList();
             });
         },
-        saveProcessDef() {
-            this.bpmnModeler.saveXML({ format: true }, function(err, xmlStr) {
-                if (err) {
-                    console.error(err);
-                } else {
-                    console.log("111", xmlStr);
+        async saveProcessDef() {
+            const options = { format: true };
+            const xmlData = await this.bpmnModeler.saveXML(options);
+            const createDeployUrl = "/engine-rest/deployment/create";
+            let formData = new FormData();
+            formData.append('data', xmlData);
 
+            this.$http.post(createDeployUrl, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data' // 设置请求头的Content-Type
                 }
+            })
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error(error);
             });
         }
     }
