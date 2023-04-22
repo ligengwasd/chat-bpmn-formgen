@@ -8,6 +8,7 @@
             <template #default="props">
                 <el-button type="primary" @click="openBpmnViewerDialog(props.row)">查看</el-button>
                 <el-button type="primary" @click="openBpmnModelerDialog(props.row)">编辑</el-button>
+                <el-button type="primary" @click="deleteProcessDef(props.row)">删除</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -129,6 +130,17 @@ export default {
         handleBpmnModelerDialogClose() {
             this.bpmnModeler.destroy();
             this.bpmnModelerDialogData.processDefinitionId = null;
+        },
+        deleteProcessDef(processDefinition) {
+            const params = {params: {"cascade": true}};
+            console.log(processDefinition.id);
+            this.$http.delete("/engine-rest/process-definition/key/".concat(processDefinition.key), params).then(response => {
+                ElMessage({
+                    message: '删除成功',
+                    type: 'success',
+                });
+                this.loadDeploymentList();
+            });
         }
     }
 }
