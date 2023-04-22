@@ -145,12 +145,11 @@ export default {
             const options = { format: true };
             const xmlData = await this.bpmnModeler.saveXML(options);
             const createDeployUrl = "/engine-rest/deployment/create";
-            let formData = new FormData();
-            formData.append('data', xmlData);
-
-            this.$http.post(createDeployUrl, formData, {
+            const formData = new FormData();
+            formData.append("data", JSON.stringify(xmlData));
+            await this.$http.post(createDeployUrl, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data' // 设置请求头的Content-Type
+                    'Content-Type': 'multipart/form-data',
                 }
             })
             .then(response => {
