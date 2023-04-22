@@ -4,11 +4,12 @@
         <el-table-column prop="name" label="名称" />
         <el-table-column prop="key" label="流程key"/>
         <el-table-column prop="version" label="版本" />
-        <el-table-column prop="version" label="操作">
+        <el-table-column prop="version" label="操作" width="600px">
             <template #default="props">
                 <el-button type="primary" @click="openBpmnViewerDialog(props.row)">查看</el-button>
                 <el-button type="primary" @click="openBpmnModelerDialog(props.row)">编辑</el-button>
                 <el-button type="primary" @click="deleteProcessDef(props.row)">删除</el-button>
+                <el-button type="primary" @click="">启动</el-button>
             </template>
         </el-table-column>
     </el-table>
