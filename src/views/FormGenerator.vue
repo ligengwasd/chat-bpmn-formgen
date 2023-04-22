@@ -4,8 +4,8 @@
         <el-table-column prop="key" label="表单名称" width="180" />
         <el-table-column label="操作" width="380">
             <template #default="props">
-                <el-button type="primary" @click="openFormDesignerDialog(props.row)">编辑表单</el-button>
-                <el-button type="primary" @click="openFormParserDialog(props.row)">查看表单</el-button>
+                <el-button type="primary" @click="openFormDesignerDialog(props.row)">编辑</el-button>
+                <el-button type="primary" @click="openFormParserDialog(props.row)">预览</el-button>
             </template>
         </el-table-column>
     </el-table>
