@@ -152,6 +152,7 @@ export default {
             .then(response => {
                 console.log("deploymentId:", response.data);
                 this.loadDeploymentList();
+                this.bpmnModelerDialogVisible = false;
             })
             .catch(error => {
                 console.error(error);
