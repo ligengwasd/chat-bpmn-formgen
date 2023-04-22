@@ -17,6 +17,7 @@
         <div id="bpmnViewerCanvas" style="border: 1px solid green;height: 500px;"></div>
     </el-dialog>
     <el-dialog v-model="bpmnModelerDialogVisible" title="编辑流程" @opened = "handleBpmnModelerDialogOpen" @closed="handleBpmnModelerDialogClose" style="width: 80%; height: 100%">
+        <el-button type="primary" @click="saveProcessDef()" style="margin-bottom: 6px">保存流程定义</el-button>
         <el-row>
             <el-col :span="18">
                 <div id="bpmnModelerCanvas" style="border: 1px solid green;height: 600px;"></div>
@@ -111,7 +112,7 @@ export default {
             if (xmlData != null) {
                 this.bpmnModeler.importXML(xmlData);
             } else {
-                this.bpmnModeler.importXML("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                     "<bpmn:definitions xmlns:bpmn=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:dc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:modeler=\"http://camunda.org/schema/modeler/1.0\" id=\"Definitions_0qynyjh\" targetNamespace=\"http://bpmn.io/schema/bpmn\" exporter=\"Camunda Modeler\" exporterVersion=\"5.10.0\" modeler:executionPlatform=\"Camunda Platform\" modeler:executionPlatformVersion=\"7.19.0\">\n" +
                     "  <bpmn:process id=\"Process_0bjr816\" isExecutable=\"true\">\n" +
                     "    <bpmn:startEvent id=\"StartEvent_1\" />\n" +
@@ -123,8 +124,9 @@ export default {
                     "      </bpmndi:BPMNShape>\n" +
                     "    </bpmndi:BPMNPlane>\n" +
                     "  </bpmndi:BPMNDiagram>\n" +
-                    "</bpmn:definitions>\n"
-                );
+                    "</bpmn:definitions>\n";
+                // xmlData.replace('Process_0bjr816', '222');
+                this.bpmnModeler.importXML(xmlData);
             }
         },
         handleBpmnModelerDialogClose() {
@@ -135,11 +137,18 @@ export default {
             const params = {params: {"cascade": true}};
             console.log(processDefinition.id);
             this.$http.delete("/engine-rest/process-definition/key/".concat(processDefinition.key), params).then(response => {
-                ElMessage({
-                    message: '删除成功',
-                    type: 'success',
-                });
+                ElMessage({message: '删除成功', type: 'success'});
                 this.loadDeploymentList();
+            });
+        },
+        saveProcessDef() {
+            this.bpmnModeler.saveXML({ format: true }, function(err, xmlStr) {
+                if (err) {
+                    console.error(err);
+                } else {
+                    console.log("111", xmlStr);
+
+                }
             });
         }
     }
