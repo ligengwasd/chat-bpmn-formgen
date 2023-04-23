@@ -55,6 +55,7 @@ import BpmnViewer from 'camunda-bpmn-js/lib/camunda-platform/Viewer';
 import BpmnModeler from 'camunda-bpmn-js/lib/camunda-platform/Modeler';
 import 'camunda-bpmn-js/dist/assets/camunda-platform-modeler.css';
 import customTranslate from '../../bpmnxml/customTranslate';
+import { ElMessage } from 'element-plus'
 
 
 export default {
@@ -181,8 +182,10 @@ export default {
                 console.log("deploymentId:", response.data);
                 this.loadDeploymentList();
                 this.bpmnModelerDialogVisible = false;
+                ElMessage({message: '保存成功', type: 'success'});
             })
             .catch(error => {
+                ElMessage({message: '保存成功', type: 'error'});
                 console.error(error);
             });
 
