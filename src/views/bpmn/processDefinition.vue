@@ -9,7 +9,7 @@
                 <el-button type="primary" @click="openBpmnViewerDialog(props.row)">查看</el-button>
                 <el-button type="primary" @click="openBpmnModelerDialog(props.row)">编辑</el-button>
                 <el-button type="primary" @click="deleteProcessDef(props.row)">删除</el-button>
-                <el-button type="primary" @click="">启动</el-button>
+                <el-button type="primary" @click="openFormParserDialog()">启动流程</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -28,6 +28,25 @@
             </el-col>
         </el-row>
     </el-dialog>
+    <el-dialog v-model="formParserDialogVisible" title="启动流程">
+        <el-form label-width="125px">
+            <el-form-item label="请先选择表单">
+                <el-select v-model="formParserDialogData.formSelectValue" placeholder="请选择表单" clearable>
+                    <el-option
+                        v-for="item in formParserDialogData.formList"
+                        :key="item.key"
+                        :label="item.key"
+                        :value="item"
+                    />
+                </el-select>
+            </el-form-item>
+        </el-form>
+        <br>
+        <form-create v-if = "formParserDialogData.formSelectValue != null"
+                     :rule="JSON.parse(formParserDialogData.formSelectValue.value).formRule"
+                     :option="JSON.parse(formParserDialogData.formSelectValue.value).options"
+        />
+    </el-dialog>
 
 </template>
 
@@ -44,7 +63,6 @@ export default {
     data() {
         return {
             deploymentList: [],
-            formList: [],
             bpmnViewerDialogVisible: false,
             bpmnViewerDialogData: {
                 processDefinitionId: null
@@ -54,7 +72,15 @@ export default {
             bpmnModelerDialogData: {
                 processDefinitionId: null
             },
-            bpmnModeler: null
+            bpmnModeler: null,
+            formParserDialogVisible: false,
+            formParserDialogData: {
+                formList: [],
+                formSelectValue: null
+                // rule: [],
+                // options: {},
+                // formValue: {}
+            }
         }
     },
     mounted() {
@@ -159,6 +185,17 @@ export default {
                 console.error(error);
             });
 
+        },
+        openFormParserDialog() {
+            this.formParserDialogVisible = true;
+            this.$http.get('/bizConfig/list').then(response => {
+                this.formParserDialogData.formList = response.data;
+            });
+            // if (rowData != null) {
+            //     const selectForm = JSON.parse(rowData.value);
+            //     this.formParserDialogData.rule = selectForm.formRule;
+            //     this.formParserDialogData.options = selectForm.formOptions;
+            // }
         }
     }
 }
