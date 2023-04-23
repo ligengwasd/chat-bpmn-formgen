@@ -20,13 +20,13 @@
     <el-dialog v-model="bpmnViewerDialogVisible" title="查看流程" @opened = "handleBpmnViewerDialogOpen" @closed="handleBpmnViewerDialogClose" style="width: 80%; height: 70%">
         <div id="bpmnViewerCanvas" style="border: 1px solid green;height: 500px;"></div>
     </el-dialog>
-    <el-dialog v-model="bpmnModelerDialogVisible" title="编辑流程" @opened = "handleBpmnModelerDialogOpen" @closed="handleBpmnModelerDialogClose" style="width: 80%; height: 100%">
+    <el-dialog v-model="bpmnModelerDialogVisible" title="编辑流程" @opened = "handleBpmnModelerDialogOpen" @closed="handleBpmnModelerDialogClose" style="width: 90%; height: 80%">
         <el-button type="primary" @click="saveProcessDef()" style="margin-bottom: 6px">保存流程定义</el-button>
         <el-row>
-            <el-col :span="18">
+            <el-col :span="20">
                 <div id="bpmnModelerCanvas" style="border: 1px solid green;height: 600px;"></div>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="4">
                 <div id="bpmnModelerCanvasPropertiesPanel" style="border: 1px solid green;height: 600px;"></div>
             </el-col>
         </el-row>
