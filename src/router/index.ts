@@ -38,6 +38,11 @@ const routes: Array<RouteRecordRaw> = [
           path: '/home/bpmn/processDefinition',  // 项目 进行中
           name: 'bpmnProcessDefinition',
           component: () => import('../views/bpmn/processDefinition.vue')    // 子路由
+        },
+        {
+          path: '/home/bpmn/task',  // 项目 进行中
+          name: 'bpmnProcessTask',
+          component: () => import('../views/bpmn/task.vue')    // 子路由
         }
       ]
     }

@@ -19,6 +19,10 @@
                         <router-link to="/home/bpmn/processDefinition">
                             <el-menu-item index="/home/bpmn/processDefinition">流程定义</el-menu-item>
                         </router-link>
+                        <router-link to="/home/bpmn/task">
+                            <el-menu-item index="/home/bpmn/task">任务列表</el-menu-item>
+                        </router-link>
+
                     </el-sub-menu>
 <!--                    <el-menu-item index="/home/formParser">-->
 <!--                        <router-link to="/home/formParser">表单解析器</router-link>-->
