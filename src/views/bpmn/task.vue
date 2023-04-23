@@ -4,7 +4,7 @@
             <el-select v-model="searchTaskParam.processDefinitionId" placeholder="流程定义" clearable>
                 <el-option
                     v-for="item in processDefinitionList"
-                    :key="item.key"
+                    :key="item.id"
                     :label="item.name"
                     :value="item.id"
                 />
@@ -64,7 +64,7 @@ export default {
     methods: {
         loadTaskList() {
             this.$http.get('/engine-rest/task',{
-                params: this.searchTaskParam
+                params: Object.fromEntries(Object.entries(this.searchTaskParam).filter(([key, value]) => value !== null && value !== ''))
             })
             .then(response => {
                 this.taskList = response.data;
