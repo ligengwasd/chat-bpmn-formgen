@@ -45,7 +45,6 @@
             </el-form-item>
         </el-form>
         <br>
-        {{formParserDialogData.formValue}}
         <form-create v-if = "formParserDialogData.rule != null"
                      :rule="formParserDialogData.rule"
                      :option="formParserDialogData.options"
