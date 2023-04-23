@@ -35,6 +35,9 @@
             </template>
         </el-table-column>
         <el-table-column label="操作">
+            <template #default="props">
+                <el-button type="primary" @click="completeTask(props.row)">完成</el-button>
+            </template>
         </el-table-column>
     </el-table>
 </template>
@@ -91,6 +94,18 @@ export default {
                 console.log(error);
             });
         },
+        completeTask(task) {
+            const completeUrl = "/engine-rest/task/".concat(task.id).concat("/complete");
+            this.$http.post(completeUrl)
+                .then(response => {
+                    ElMessage({message: '保存成功', type: 'success'});
+                })
+                .catch(error => {
+                    ElMessage({message: '保存失败', type: 'error'});
+                    console.error(error);
+                });
+
+        }
 
     }
 }
