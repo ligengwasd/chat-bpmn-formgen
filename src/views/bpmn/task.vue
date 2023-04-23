@@ -13,14 +13,17 @@
         <el-form-item label="指派人：">
             <el-input v-model="searchTaskParam.assignee" placeholder="指派人" />
         </el-form-item>
+        <el-form-item label="业务key：">
+            <el-input v-model="searchTaskParam.processInstanceBusinessKeyLike" placeholder="业务key模糊匹配" />
+        </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="loadTaskList()">查询</el-button>
         </el-form-item>
     </el-form>
-
     <el-table :data="taskList" border stripe style="width: 100%; height: 800px">
         <el-table-column prop="id" label="任务ID" width="80" show-overflow-tooltip/>
         <el-table-column prop="assignee" label="指派人" width="80" />
+        <el-table-column prop="businessKey" label="名称" />
         <el-table-column prop="name" label="任务名称" width="120" />
         <el-table-column prop="executionId" label="执行流ID" width="180" show-overflow-tooltip/>
         <el-table-column prop="processDefinitionId" label="流程定义ID" width="180" show-overflow-tooltip/>
@@ -51,7 +54,8 @@ export default {
             processDefinitionList: [],
             searchTaskParam: {
                 processDefinitionId: null,
-                assignee: null
+                assignee: null,
+                processInstanceBusinessKeyLike: null
             }
         }
     },
