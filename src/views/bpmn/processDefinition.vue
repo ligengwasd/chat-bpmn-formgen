@@ -8,7 +8,7 @@
             <template #default="props">
                 <el-button type="primary" @click="openBpmnViewerDialog(props.row)">查看</el-button>
                 <el-button type="primary" @click="openBpmnModelerDialog(props.row)">编辑</el-button>
-                <el-button type="primary" @click="deleteProcessDef(props.row)">删除</el-button>
+<!--                <el-button type="primary" @click="deleteProcessDef(props.row)">删除</el-button>-->
                 <el-button type="primary" @click="openFormParserDialog()">启动流程</el-button>
             </template>
         </el-table-column>
