@@ -5,7 +5,7 @@
         <el-table-column prop="name" label="名称" />
         <el-table-column prop="key" label="流程key"/>
         <el-table-column prop="version" label="版本" />
-        <el-table-column prop="deploymentId" label="版本" show-overflow-tooltip/>
+        <el-table-column prop="deploymentId" label="部署ID" show-overflow-tooltip/>
         <el-table-column prop="resource" label="资源" show-overflow-tooltip/>
         <el-table-column label="操作" width="300px">
             <template #default="props">
