@@ -110,6 +110,7 @@ export default {
             this.$http.get(queryResources).then(response => {
                 let xmlData = response.data.bpmn20Xml;
                 this.bpmnViewer = new BpmnViewer({container: '#bpmnViewerCanvas'});
+                console.log("bpmnXml内容:", xmlData)
                 this.bpmnViewer.importXML(xmlData);
             })
         },
