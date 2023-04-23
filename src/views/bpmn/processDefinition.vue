@@ -1,10 +1,13 @@
 <template>
     <el-button type="primary" @click="openBpmnModelerDialog()">新建</el-button>
     <el-table :data="deploymentList" border style="width: 100%">
+        <el-table-column prop="id" label="流程定义ID" show-overflow-tooltip/>
         <el-table-column prop="name" label="名称" />
         <el-table-column prop="key" label="流程key"/>
         <el-table-column prop="version" label="版本" />
-        <el-table-column prop="version" label="操作" width="600px">
+        <el-table-column prop="deploymentId" label="版本" show-overflow-tooltip/>
+        <el-table-column prop="resource" label="资源" show-overflow-tooltip/>
+        <el-table-column label="操作" width="300px">
             <template #default="props">
                 <el-button type="primary" @click="openBpmnViewerDialog(props.row)">查看</el-button>
                 <el-button type="primary" @click="openBpmnModelerDialog(props.row)">编辑</el-button>
@@ -47,7 +50,6 @@
                      :option="JSON.parse(formParserDialogData.formSelectValue.value).options"
         />
     </el-dialog>
-
 </template>
 
 <script>
