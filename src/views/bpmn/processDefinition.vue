@@ -34,7 +34,7 @@
     <el-dialog v-model="formParserDialogVisible" title="启动流程">
         <el-form label-width="125px">
             <el-form-item label="请先选择表单">
-                <el-select v-model="formParserDialogData.formSelectValue" placeholder="请选择表单" clearable>
+                <el-select placeholder="请选择表单" clearable @change="formSelectorChange">
                     <el-option
                         v-for="item in formParserDialogData.formList"
                         :key="item.key"
@@ -45,9 +45,11 @@
             </el-form-item>
         </el-form>
         <br>
-        <form-create v-if = "formParserDialogData.formSelectValue != null"
-                     :rule="JSON.parse(formParserDialogData.formSelectValue.value).formRule"
-                     :option="JSON.parse(formParserDialogData.formSelectValue.value).options"
+        {{formParserDialogData.formValue}}
+        <form-create v-if = "formParserDialogData.rule != null"
+                     :rule="formParserDialogData.rule"
+                     :option="formParserDialogData.options"
+                     v-model="formParserDialogData.formValue"
         />
     </el-dialog>
 </template>
@@ -79,10 +81,10 @@ export default {
             formParserDialogVisible: false,
             formParserDialogData: {
                 formList: [],
-                formSelectValue: null
-                // rule: [],
-                // options: {},
-                // formValue: {}
+                // formSelectValue: null
+                rule: [],
+                options: {},
+                formValue: {}
             }
         }
     },
@@ -202,6 +204,11 @@ export default {
             //     this.formParserDialogData.rule = selectForm.formRule;
             //     this.formParserDialogData.options = selectForm.formOptions;
             // }
+        },
+        formSelectorChange(selectedValue){
+            console.log("111", selectedValue)
+            this.formParserDialogData.rule = JSON.parse(selectedValue.value).formRule
+            this.formParserDialogData.options = JSON.parse(selectedValue.value).formOptions
         }
     }
 }
