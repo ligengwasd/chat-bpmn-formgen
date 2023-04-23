@@ -170,7 +170,7 @@ export default {
             });
         },
         async saveProcessDef() {
-            const options = { format: false };
+            const options = { format: true };
             const xmlData = await this.bpmnModeler.saveXML(options);
             const createDeployUrl = "bpmn/deployment/create";
             const param = {
