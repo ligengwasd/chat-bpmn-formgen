@@ -12,7 +12,7 @@
                 <el-button type="primary" @click="openBpmnViewerDialog(props.row)">查看</el-button>
                 <el-button type="primary" @click="openBpmnModelerDialog(props.row)">编辑</el-button>
 <!--                <el-button type="primary" @click="deleteProcessDef(props.row)">删除</el-button>-->
-                <el-button type="primary" @click="openFormParserDialog()">启动流程</el-button>
+                <el-button type="primary" @click="openFormParserDialog(props.row)">启动流程</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -32,7 +32,7 @@
         </el-row>
     </el-dialog>
     <el-dialog v-model="formParserDialogVisible" title="启动流程">
-        <el-form label-width="125px">
+        <el-form label-width="125px" inline>
             <el-form-item label="请先选择表单">
                 <el-select placeholder="请选择表单" clearable @change="formSelectorChange">
                     <el-option
@@ -43,6 +43,9 @@
                     />
                 </el-select>
             </el-form-item>
+            <el-form-item label="请输入业务key">
+                <el-input v-model="formParserDialogData.businessKey" placeholder="请输入业务key" />
+            </el-form-item>
         </el-form>
         <br>
         <form-create v-if = "formParserDialogData.rule != null"
@@ -50,6 +53,11 @@
                      :option="formParserDialogData.options"
                      v-model="formParserDialogData.formValue"
         />
+        <template #footer>
+            <el-button type="primary" @click="startProcess">
+              启动流程
+            </el-button>
+        </template>
     </el-dialog>
 </template>
 
@@ -80,6 +88,8 @@ export default {
             formParserDialogVisible: false,
             formParserDialogData: {
                 formList: [],
+                processDefinition: null,
+                businessKey: null,
                 // formSelectValue: null
                 rule: [],
                 options: {},
@@ -193,11 +203,12 @@ export default {
             });
 
         },
-        openFormParserDialog() {
+        openFormParserDialog(processDefinition) {
             this.formParserDialogVisible = true;
             this.$http.get('/bizConfig/list').then(response => {
                 this.formParserDialogData.formList = response.data;
             });
+            this.formParserDialogData.processDefinition = processDefinition
             // if (rowData != null) {
             //     const selectForm = JSON.parse(rowData.value);
             //     this.formParserDialogData.rule = selectForm.formRule;
@@ -208,6 +219,23 @@ export default {
             console.log("111", selectedValue)
             this.formParserDialogData.rule = JSON.parse(selectedValue.value).formRule
             this.formParserDialogData.options = JSON.parse(selectedValue.value).formOptions
+        },
+        startProcess() {
+            console.log(111, this.formParserDialogData.formValue)
+            const createDeployUrl = "/engine-rest/process-definition/".concat(this.formParserDialogData.processDefinition.id).concat("/start");
+            const param = {
+                "businessKey": this.formParserDialogData.businessKey
+            };
+
+            this.$http.post(createDeployUrl, param)
+                .then(response => {
+                    ElMessage({message: '保存成功', type: 'success'});
+                    this.formParserDialogVisible = false;
+                })
+                .catch(error => {
+                    ElMessage({message: '保存失败', type: 'error'});
+                    console.error(error);
+                });
         }
     }
 }
