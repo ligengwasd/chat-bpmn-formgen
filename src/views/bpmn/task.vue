@@ -18,8 +18,6 @@
         </el-form-item>
     </el-form>
 
-    <br>
-    <br>
     <el-table :data="taskList" border stripe style="width: 100%; height: 800px">
         <el-table-column prop="id" label="任务ID" width="80" show-overflow-tooltip/>
         <el-table-column prop="assignee" label="指派人" width="80" />
