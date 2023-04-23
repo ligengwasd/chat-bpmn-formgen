@@ -1,4 +1,25 @@
 <template>
+    <el-form label-width="125px" :inline="true">
+        <el-form-item label="流程定义：">
+            <el-select v-model="searchTaskParam.processDefinitionId" placeholder="流程定义" clearable>
+                <el-option
+                    v-for="item in processDefinitionList"
+                    :key="item.key"
+                    :label="item.name"
+                    :value="item.id"
+                />
+            </el-select>
+        </el-form-item>
+        <el-form-item label="指派人：">
+            <el-input v-model="searchTaskParam.assignee" placeholder="指派人" />
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="loadTaskList()">查询</el-button>
+        </el-form-item>
+    </el-form>
+
+    <br>
+    <br>
     <el-table :data="taskList" border stripe style="width: 100%; height: 800px">
         <el-table-column prop="id" label="任务ID" width="80" show-overflow-tooltip/>
         <el-table-column prop="assignee" label="指派人" width="80" />
@@ -13,7 +34,6 @@
             </template>
         </el-table-column>
         <el-table-column label="操作">
-
         </el-table-column>
     </el-table>
 </template>
@@ -29,20 +49,24 @@ export default {
     },
     data() {
         return {
-            taskList: []
+            taskList: [],
+            processDefinitionList: [],
+            searchTaskParam: {
+                processDefinitionId: null,
+                assignee: null
+            }
         }
     },
     mounted() {
         // 设置语言为中文
         dayjs.locale('zh-cn')
         this.loadTaskList()
+        this.loadProcessDefinitionList()
     },
     methods: {
         loadTaskList() {
-            this.$http.get('/engine-rest/task', {
-            }, {
-                params: {
-                }
+            this.$http.get('/engine-rest/task',{
+                params: this.searchTaskParam
             })
             .then(response => {
                 this.taskList = response.data;
@@ -56,7 +80,15 @@ export default {
             if (time != null) {
                 return dayjs(time).format('YYYY-MM-DD HH:mm:ss')
             }
-        }
+        },
+        loadProcessDefinitionList() {
+            const params = {params: {"latestVersion": true}};
+            this.$http.get('/engine-rest/process-definition', params).then(response => {
+                this.processDefinitionList = response.data
+            }) .catch(error => {
+                console.log(error);
+            });
+        },
 
     }
 }
