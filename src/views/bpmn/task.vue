@@ -96,7 +96,7 @@ export default {
         },
         completeTask(task) {
             const completeUrl = "/engine-rest/task/".concat(task.id).concat("/complete");
-            this.$http.post(completeUrl)
+            this.$http.post(completeUrl, {})
                 .then(response => {
                     ElMessage({message: '保存成功', type: 'success'});
                 })
