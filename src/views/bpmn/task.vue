@@ -77,7 +77,6 @@ export default {
     mounted() {
         // 设置语言为中文
         dayjs.locale('zh-cn')
-        this.loadTaskList()
         this.loadProcessDefinitionList()
     },
     methods: {
