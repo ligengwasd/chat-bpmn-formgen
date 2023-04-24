@@ -51,7 +51,7 @@
         </el-col>
     </el-row>
 
-    <el-dialog v-model="variableDialogVisible" title="参数列表">
+    <el-dialog v-model="variableDialogVisible" title="参数列表" @closed="taskList = []">
         <el-table :data="variableList" border stripe style="width: 100%; height: 800px">
             <el-table-column prop="name" label="参数名称"  show-overflow-tooltip/>
             <el-table-column prop="type" label="参数类型"  show-overflow-tooltip/>
