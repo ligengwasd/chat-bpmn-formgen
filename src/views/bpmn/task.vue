@@ -29,15 +29,15 @@
         </el-col>
         <el-col :span="12">
             <el-table :data="taskList" border stripe>
-                <el-table-column prop="id" label="任务ID" width="80" show-overflow-tooltip/>
-                <el-table-column prop="assignee" label="指派人" width="80" />
+                <el-table-column prop="id" label="任务ID" show-overflow-tooltip/>
+                <el-table-column prop="assignee" label="指派人" />
                 <el-table-column prop="businessKey" label="名称" />
-                <el-table-column prop="name" label="任务名称" width="120" />
+                <el-table-column prop="name" label="任务名称" />
 <!--                <el-table-column prop="executionId" label="执行流ID" width="180" show-overflow-tooltip/>-->
 <!--                <el-table-column prop="processDefinitionId" label="流程定义ID" width="180" show-overflow-tooltip/>-->
 <!--                <el-table-column prop="processInstanceId" label="流程实例ID" width="180" show-overflow-tooltip/>-->
-                <el-table-column prop="taskDefinitionKey" label="taskDefinitionKey" width="150" />
-                <el-table-column label="创建时间" width="180">
+                <el-table-column prop="taskDefinitionKey" label="taskDefinitionKey" />
+                <el-table-column label="创建时间">
                     <template #default="props">
                         {{formatTime(props.row.created)}}
                     </template>
