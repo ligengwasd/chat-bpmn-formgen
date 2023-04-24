@@ -11,7 +11,7 @@
                 <el-table-column prop="businessKey" label="业务Key" />
                 <el-table-column label="操作" width="120px">
                     <template #default="props">
-                        <el-button type="primary" @click="">查看参数</el-button>
+                        <el-button type="primary" @click="loadVariableList({'processInstanceIdIn':props.id})">查看参数</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -51,6 +51,14 @@
         </el-col>
     </el-row>
 
+    <el-dialog v-model="variableDialogVisible" title="参数列表">
+        {{variableList}}
+        <el-table :data="variableList" border stripe style="width: 100%; height: 800px">
+            <el-table-column prop="name" label="参数名称"  show-overflow-tooltip/>
+            <el-table-column prop="type" label="参数类型"  show-overflow-tooltip/>
+            <el-table-column prop="value" label="参数值"  show-overflow-tooltip/>
+        </el-table>
+    </el-dialog>
 
 </template>
 
@@ -68,8 +76,9 @@ export default {
             taskList: [],
             processDefinitionList: [],
             processInstanceList:[],
-            executionList:[]
-
+            executionList:[],
+            variableDialogVisible: false,
+            variableList: []
         }
     },
     mounted() {
@@ -138,6 +147,16 @@ export default {
                     console.error(error);
                 });
 
+        },
+        loadVariableList(param) {
+            const url = "/engine-rest/variable-instance";
+            const params = {params: param};
+            this.$http.get(url, params).then(response => {
+                this.variableList = response.data
+            }) .catch(error => {
+                console.log(error);
+            });
+            this.variableDialogVisible = true;
         }
     }
 }
