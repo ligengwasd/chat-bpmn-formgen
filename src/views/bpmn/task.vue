@@ -1,12 +1,12 @@
 <template>
     <el-row>
-        <el-col :span="3" style="margin-right: 10px">
+        <el-col :span="2" style="margin-right: 10px">
             <el-table :data="processDefinitionList" @current-change="handleSelectProcessDefinition" highlight-current-row border style="width: 100%">
                 <el-table-column prop="name" label="流程定义名称" />
             </el-table>
         </el-col>
-        <el-col :span="6" style="margin-right: 10px">
-            <el-table :data="processInstanceList" highlight-current-row border style="width: 100%">
+        <el-col :span="5" style="margin-right: 10px">
+            <el-table :data="processInstanceList" @current-change="handleSelectProcessInstance" highlight-current-row border style="width: 100%">
                 <el-table-column prop="id" label="流程实例" show-overflow-tooltip/>
                 <el-table-column prop="businessKey" label="业务Key" />
                 <el-table-column label="操作" width="120px">
@@ -16,50 +16,40 @@
                 </el-table-column>
             </el-table>
         </el-col>
-        <el-col :span="6"></el-col>
-        <el-col :span="6"></el-col>
+        <el-col :span="4" style="margin-right: 10px">
+            <el-table :data="executionList" @current-change="handleSelectExecution" highlight-current-row border style="width: 100%">
+                <el-table-column prop="id" label="执行流ID" show-overflow-tooltip/>
+                <el-table-column prop="ended" label="是否结束" />
+                <el-table-column label="操作" width="120px">
+                    <template #default="props">
+                        <el-button type="primary" @click="">查看参数</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-col>
+        <el-col :span="12">
+            <el-table :data="taskList" border stripe style="width: 100%; height: 800px">
+                <el-table-column prop="id" label="任务ID" width="80" show-overflow-tooltip/>
+                <el-table-column prop="assignee" label="指派人" width="80" />
+                <el-table-column prop="businessKey" label="名称" />
+                <el-table-column prop="name" label="任务名称" width="120" />
+<!--                <el-table-column prop="executionId" label="执行流ID" width="180" show-overflow-tooltip/>-->
+<!--                <el-table-column prop="processDefinitionId" label="流程定义ID" width="180" show-overflow-tooltip/>-->
+<!--                <el-table-column prop="processInstanceId" label="流程实例ID" width="180" show-overflow-tooltip/>-->
+                <el-table-column prop="taskDefinitionKey" label="taskDefinitionKey" width="150" />
+                <el-table-column label="创建时间" width="180">
+                    <template #default="props">
+                        {{formatTime(props.row.created)}}
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作">
+                    <template #default="props">
+                        <el-button type="primary" @click="completeTask(props.row)">完成</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-col>
     </el-row>
-    <el-form label-width="125px" :inline="true">
-        <el-form-item label="流程定义：">
-            <el-select v-model="searchTaskParam.processDefinitionId" placeholder="流程定义" clearable>
-                <el-option
-                    v-for="item in processDefinitionList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                />
-            </el-select>
-        </el-form-item>
-        <el-form-item label="指派人：">
-            <el-input v-model="searchTaskParam.assignee" placeholder="指派人" />
-        </el-form-item>
-        <el-form-item label="业务key：">
-            <el-input v-model="searchTaskParam.processInstanceBusinessKeyLike" placeholder="业务key模糊匹配" />
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="loadTaskList()">查询</el-button>
-        </el-form-item>
-    </el-form>
-    <el-table :data="taskList" border stripe style="width: 100%; height: 800px">
-        <el-table-column prop="id" label="任务ID" width="80" show-overflow-tooltip/>
-        <el-table-column prop="assignee" label="指派人" width="80" />
-        <el-table-column prop="businessKey" label="名称" />
-        <el-table-column prop="name" label="任务名称" width="120" />
-        <el-table-column prop="executionId" label="执行流ID" width="180" show-overflow-tooltip/>
-        <el-table-column prop="processDefinitionId" label="流程定义ID" width="180" show-overflow-tooltip/>
-        <el-table-column prop="processInstanceId" label="流程实例ID" width="180" show-overflow-tooltip/>
-        <el-table-column prop="taskDefinitionKey" label="taskDefinitionKey" width="150" />
-        <el-table-column label="创建时间" width="180">
-            <template #default="props">
-                {{formatTime(props.row.created)}}
-            </template>
-        </el-table-column>
-        <el-table-column label="操作">
-            <template #default="props">
-                <el-button type="primary" @click="completeTask(props.row)">完成</el-button>
-            </template>
-        </el-table-column>
-    </el-table>
 </template>
 
 <script>
@@ -76,6 +66,7 @@ export default {
             taskList: [],
             processDefinitionList: [],
             processInstanceList:[],
+            executionList:[],
             searchTaskParam: {
                 processDefinitionId: null,
                 assignee: null,
@@ -118,6 +109,31 @@ export default {
                     console.log(response.data);
                 })
         },
+        handleSelectProcessInstance(processInstance) {
+            this.$http.get('/engine-rest/execution',{
+                params: {
+                    processInstanceId: processInstance.id
+                }
+            })
+                .then(response => {
+                    this.executionList = response.data;
+                    console.log(response.data);
+                })
+        },
+        handleSelectExecution(execution) {
+            this.$http.get('/engine-rest/task',{
+                params: {
+                    executionId: execution.id
+                }
+            })
+                .then(response => {
+                    this.taskList = response.data;
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        },
         loadProcessDefinitionList() {
             const params = {params: {"latestVersion": true}};
             this.$http.get('/engine-rest/process-definition', params).then(response => {
@@ -138,9 +154,12 @@ export default {
                 });
 
         }
-
     }
 }
 </script>
 <style>
+.current-row>td {
+    background: #006eff;
+
+}
 </style>
