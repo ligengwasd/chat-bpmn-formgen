@@ -1,4 +1,24 @@
 <template>
+    <el-row>
+        <el-col :span="3" style="margin-right: 10px">
+            <el-table :data="processDefinitionList" @current-change="handleSelectProcessDefinition" highlight-current-row border style="width: 100%">
+                <el-table-column prop="name" label="流程定义名称" />
+            </el-table>
+        </el-col>
+        <el-col :span="6" style="margin-right: 10px">
+            <el-table :data="processInstanceList" highlight-current-row border style="width: 100%">
+                <el-table-column prop="id" label="流程实例" show-overflow-tooltip/>
+                <el-table-column prop="businessKey" label="业务Key" />
+                <el-table-column label="操作" width="120px">
+                    <template #default="props">
+                        <el-button type="primary" @click="">查看参数</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-col>
+        <el-col :span="6"></el-col>
+        <el-col :span="6"></el-col>
+    </el-row>
     <el-form label-width="125px" :inline="true">
         <el-form-item label="流程定义：">
             <el-select v-model="searchTaskParam.processDefinitionId" placeholder="流程定义" clearable>
@@ -55,6 +75,7 @@ export default {
         return {
             taskList: [],
             processDefinitionList: [],
+            processInstanceList:[],
             searchTaskParam: {
                 processDefinitionId: null,
                 assignee: null,
@@ -85,6 +106,17 @@ export default {
             if (time != null) {
                 return dayjs(time).format('YYYY-MM-DD HH:mm:ss')
             }
+        },
+        handleSelectProcessDefinition(processDefinition) {
+            this.$http.get('/engine-rest/process-instance',{
+                params: {
+                    processDefinitionId: processDefinition.id
+                }
+            })
+                .then(response => {
+                    this.processInstanceList = response.data;
+                    console.log(response.data);
+                })
         },
         loadProcessDefinitionList() {
             const params = {params: {"latestVersion": true}};
