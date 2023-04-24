@@ -22,13 +22,13 @@
                 <el-table-column prop="ended" label="是否结束" />
                 <el-table-column label="操作" width="120px">
                     <template #default="props">
-                        <el-button type="primary" @click="">查看参数</el-button>
+                        <el-button type="primary" @click="loadVariableList({'executionIdIn':props.row.id})">查看参数</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </el-col>
         <el-col :span="12">
-            <el-table :data="taskList" border stripe style="width: 100%; height: 800px">
+            <el-table :data="taskList" border stripe>
                 <el-table-column prop="id" label="任务ID" width="80" show-overflow-tooltip/>
                 <el-table-column prop="assignee" label="指派人" width="80" />
                 <el-table-column prop="businessKey" label="名称" />
@@ -42,9 +42,10 @@
                         {{formatTime(props.row.created)}}
                     </template>
                 </el-table-column>
-                <el-table-column label="操作">
+                <el-table-column label="操作" width="200px">
                     <template #default="props">
                         <el-button type="primary" @click="completeTask(props.row)">完成</el-button>
+                        <el-button type="primary" @click="loadVariableList({'taskIdIn':props.row.id})">查看参数</el-button>
                     </template>
                 </el-table-column>
             </el-table>
