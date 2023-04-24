@@ -32,6 +32,9 @@
         </el-row>
     </el-dialog>
     <el-dialog v-model="formParserDialogVisible" title="启动流程">
+        {{formParserDialogData.formValue}}
+        <br>
+        {{formParserDialogData.rule}}
         <el-form label-width="125px" inline>
             <el-form-item label="请先选择表单">
                 <el-select placeholder="请选择表单" clearable @change="formSelectorChange">
@@ -223,10 +226,18 @@ export default {
         startProcess() {
             console.log(111, this.formParserDialogData.formValue)
             const createDeployUrl = "/engine-rest/process-definition/".concat(this.formParserDialogData.processDefinition.id).concat("/start");
+            let variables = {};
+            for(let key in this.formParserDialogData.formValue){
+                console.log(key, this.formParserDialogData.formValue[key])
+                variables[key] = {
+                    "value": this.formParserDialogData.formValue[key],
+                }
+            }
+            console.log("variables", variables);
             const param = {
-                "businessKey": this.formParserDialogData.businessKey
+                "businessKey": this.formParserDialogData.businessKey,
+                "variables": variables
             };
-
             this.$http.post(createDeployUrl, param)
                 .then(response => {
                     ElMessage({message: '保存成功', type: 'success'});
