@@ -32,12 +32,9 @@
         </el-row>
     </el-dialog>
     <el-dialog v-model="formParserDialogVisible" title="启动流程">
-        {{formParserDialogData.formValue}}
-        <br>
-        {{formParserDialogData.rule}}
         <el-form label-width="125px" inline>
             <el-form-item label="请先选择表单">
-                <el-select placeholder="请选择表单" clearable @change="formSelectorChange">
+                <el-select v-model="formParserDialogData.selectedForm" placeholder="请选择表单" clearable @change="formSelectorChange">
                     <el-option
                         v-for="item in formParserDialogData.formList"
                         :key="item.key"
@@ -91,6 +88,7 @@ export default {
             formParserDialogVisible: false,
             formParserDialogData: {
                 formList: [],
+                selectedForm: null,
                 processDefinition: null,
                 businessKey: null,
                 // formSelectValue: null
