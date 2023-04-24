@@ -50,6 +50,8 @@
             </el-table>
         </el-col>
     </el-row>
+
+
 </template>
 
 <script>
@@ -66,12 +68,8 @@ export default {
             taskList: [],
             processDefinitionList: [],
             processInstanceList:[],
-            executionList:[],
-            searchTaskParam: {
-                processDefinitionId: null,
-                assignee: null,
-                processInstanceBusinessKeyLike: null
-            }
+            executionList:[]
+
         }
     },
     mounted() {
@@ -80,18 +78,6 @@ export default {
         this.loadProcessDefinitionList()
     },
     methods: {
-        loadTaskList() {
-            this.$http.get('/engine-rest/task',{
-                params: Object.fromEntries(Object.entries(this.searchTaskParam).filter(([key, value]) => value !== null && value !== ''))
-            })
-            .then(response => {
-                this.taskList = response.data;
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        },
         formatTime(time) {
             if (time != null) {
                 return dayjs(time).format('YYYY-MM-DD HH:mm:ss')
