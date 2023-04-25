@@ -1,11 +1,17 @@
 <template>
     <el-row>
-        <el-col :span="2" style="margin-right: 10px">
-            <el-table :data="processDefinitionList" @current-change="handleSelectProcessDefinition" highlight-current-row border style="width: 100%">
-                <el-table-column prop="name" label="流程定义名称" />
-            </el-table>
-        </el-col>
-        <el-col :span="5" style="margin-right: 10px">
+        <el-col :span="6" style="margin-right: 10px">
+            查询流程实例：
+            <el-select v-model="processDefinitionSelectorValue" @change="handleSelectProcessDefinition" placeholder="流程定义" clearable>
+                <el-option
+                    v-for="item in processDefinitionList"
+                    :key="item.key"
+                    :label="item.name"
+                    :value="item.id"
+                />
+            </el-select>
+            <br>
+            <br>
             <el-table :data="processInstanceList" @current-change="handleSelectProcessInstance" highlight-current-row border style="width: 100%">
                 <el-table-column prop="id" label="流程实例" show-overflow-tooltip/>
                 <el-table-column prop="businessKey" label="业务Key" />
@@ -16,7 +22,8 @@
                 </el-table-column>
             </el-table>
         </el-col>
-        <el-col :span="4" style="margin-right: 10px">
+        <el-col :span="17" style="margin-right: 10px">
+            执行流列表：
             <el-table :data="executionList" @current-change="handleSelectExecution" highlight-current-row border style="width: 100%">
                 <el-table-column prop="id" label="执行流ID" show-overflow-tooltip/>
                 <el-table-column prop="ended" label="是否结束" />
@@ -26,8 +33,9 @@
                     </template>
                 </el-table-column>
             </el-table>
-        </el-col>
-        <el-col :span="12">
+            <br>
+            <br>
+            任务列表：
             <el-table :data="taskList" border stripe>
                 <el-table-column prop="id" label="任务ID" show-overflow-tooltip/>
                 <el-table-column prop="assignee" label="指派人" />
@@ -73,6 +81,7 @@ export default {
     },
     data() {
         return {
+            processDefinitionSelectorValue: null,
             taskList: [],
             processDefinitionList: [],
             processInstanceList:[],
@@ -92,10 +101,10 @@ export default {
                 return dayjs(time).format('YYYY-MM-DD HH:mm:ss')
             }
         },
-        handleSelectProcessDefinition(processDefinition) {
+        handleSelectProcessDefinition(processDefinitionId) {
             this.$http.get('/engine-rest/process-instance',{
                 params: {
-                    processDefinitionId: processDefinition.id
+                    processDefinitionId: processDefinitionId
                 }
             })
                 .then(response => {
