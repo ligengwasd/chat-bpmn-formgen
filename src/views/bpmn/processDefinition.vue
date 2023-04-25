@@ -67,6 +67,7 @@ import BpmnModeler from 'camunda-bpmn-js/lib/camunda-platform/Modeler';
 import 'camunda-bpmn-js/dist/assets/camunda-platform-modeler.css';
 import customTranslate from '../../bpmnxml/customTranslate';
 import { ElMessage } from 'element-plus'
+import { v4 as uuidv4 } from 'uuid'
 
 
 export default {
@@ -168,7 +169,8 @@ export default {
                     "    </bpmndi:BPMNPlane>\n" +
                     "  </bpmndi:BPMNDiagram>\n" +
                     "</bpmn:definitions>\n";
-                // xmlData.replace('Process_0bjr816', '222');
+                let uuidStr = uuidv4().replaceAll('-', '')
+                xmlData = xmlData.replace('Process_0bjr816', 'Process_'.concat(uuidStr));
                 this.bpmnModeler.importXML(xmlData);
             }
         },
