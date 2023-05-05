@@ -1,6 +1,6 @@
 <template>
     <el-row>
-        <el-col :span="6" style="margin-right: 10px">
+        <el-col :span="8" style="margin-right: 10px">
             查询流程实例：
             <el-select v-model="processDefinitionSelectorValue" @change="handleSelectProcessDefinition" placeholder="流程定义" clearable>
                 <el-option
@@ -15,14 +15,15 @@
             <el-table :data="processInstanceList" @current-change="handleSelectProcessInstance" highlight-current-row border style="width: 100%">
                 <el-table-column prop="id" label="流程实例" show-overflow-tooltip/>
                 <el-table-column prop="businessKey" label="业务Key" />
-                <el-table-column label="操作" width="120px">
+                <el-table-column label="操作" width="220px">
                     <template #default="props">
                         <el-button type="primary" @click="loadVariableList({'processInstanceIdIn':props.row.id})">查看参数</el-button>
+                        <el-button type="primary" @click="processTrack({'executionIdIn':props.row.id})">流程追踪</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </el-col>
-        <el-col :span="17" style="margin-right: 10px">
+        <el-col :span="15" style="margin-right: 10px">
             执行流列表：
             <el-table :data="executionList" @current-change="handleSelectExecution" highlight-current-row border style="width: 100%">
                 <el-table-column prop="id" label="执行流ID" show-overflow-tooltip/>
@@ -68,6 +69,9 @@
         </el-table>
     </el-dialog>
 
+    <el-dialog v-model="bpmnViewerDialogVisible" title="查看流程" @opened = "handleBpmnViewerDialogOpen" @closed="handleBpmnViewerDialogClose" style="width: 80%; height: 70%">
+        <div id="bpmnViewerCanvas" style="border: 1px solid green;height: 500px;"></div>
+    </el-dialog>
 </template>
 
 <script>
@@ -87,7 +91,8 @@ export default {
             processInstanceList:[],
             executionList:[],
             variableDialogVisible: false,
-            variableList: []
+            variableList: [],
+            bpmnViewerDialogVisible: false
         }
     },
     mounted() {
@@ -166,6 +171,11 @@ export default {
                 console.log(error);
             });
             this.variableDialogVisible = true;
+        },
+        processTrack(processInstanceId) {
+            console.log("111");
+            console.log(processInstanceId);
+            this.bpmnViewerDialogVisible = true;
         }
     }
 }
@@ -175,15 +185,15 @@ export default {
     background: #006eff;
 
 /*  以下为流程图高亮样式  */
-.highlight .djs-visual > :nth-child(1) {<!-- -->
+.highlight .djs-visual > :nth-child(1) {
     stroke: green !important;
     fill: rgba(0, 80, 0, 0.4) !important;
 }
-.highlightIDO .djs-visual > :nth-child(1) {<!-- -->
+.highlightIDO .djs-visual > :nth-child(1) {
     stroke: rgb(255, 196, 0) !important;
     fill: rgba(255, 196, 0, 0.4) !important;
 }
-.highlightTODO .djs-visual > :nth-child(1) {<!-- -->
+.highlightTODO .djs-visual > :nth-child(1) {
     stroke: rgb(255, 0, 0) !important;
     fill: rgba(255, 255, 255, 0.4) !important;
 }
