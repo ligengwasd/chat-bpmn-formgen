@@ -77,11 +77,6 @@ import { ElMessage } from 'element-plus'
 import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
 import BpmnViewer from "camunda-bpmn-js/lib/camunda-platform/Viewer"; // 如果需要中文语言包
-// import("https://unpkg.com/bpmn-js@0.23.0/dist/assets/diagram-js.css")
-// import("https://unpkg.com/bpmn-js@0.23.0/dist/assets/bpmn-js.css")
-// import("https://unpkg.com/bpmn-js@12.1.1/dist/assets/bpmn-font/css/bpmn.css")
-// import("https://unpkg.com/bpmn-js@0.23.0/dist/bpmn-modeler.development.js")
-
 
 export default {
     setup() {
@@ -185,37 +180,40 @@ export default {
                 this.bpmnViewer = new BpmnViewer({container: '#bpmnViewerCanvas'});
                 console.log("bpmnXml内容:", xmlData)
                 this.bpmnViewer.importXML(xmlData);
-                let canvas = this.bpmnViewer.get("canvas");
-                canvas.addMarker('Activity_1w6oyus', 'highlight');
             })
-            // canvas.addMarker("", "highlight");
 
-            // this.$http.get('/bpmn/highLine/'.concat(processInstanceId)).then(response => {
-            //     console.log("highLine数据", response.data);
-            //     let canvas = this.bpmnViewer.get("canvas");
-            //     //高亮线
-            //     response.data.highLine.forEach((e) => {
-            //         canvas.addMarker(e, "highlight");
-            //     });
-            //     // //高亮任务
-            //     // response.data.highPoint.forEach((e) => {
-            //     //     if (e) {
-            //     //         canvas.addMarker(e, "highlight");
-            //     //     }
-            //     // });
-            //     // //高亮我执行过的任务
-            //     // response.data.iDo.forEach((e) => {
-            //     //     if (e) {
-            //     //         canvas.addMarker(e, "highlightIDO");
-            //     //     }
-            //     // });
-            //     //高亮下一个任务
-            //     response.data.waitingToDo.forEach((e) => {
-            //         if (e) {
-            //             canvas.addMarker(e, "highlightTODO");
-            //         }
-            //     });
-            // })
+            this.$http.get('/bpmn/highLine/'.concat(processInstanceId)).then(response => {
+                console.log("highLine数据", response.data);
+                let canvas = this.bpmnViewer.get("canvas");
+                //高亮线
+                response.data.highLine.forEach((e) => {
+                    canvas.addMarker(e, "highlight");
+                });
+                //高亮任务
+                if (response.data.highPoint.length > 0) {
+                    response.data.highPoint.forEach((e) => {
+                        if (e) {
+                            canvas.addMarker(e, "highlight");
+                        }
+                    });
+                }
+                //高亮我执行过的任务
+                if (response.data.ido.length > 0) {
+                    response.data.ido.forEach((e) => {
+                        if (e) {
+                            canvas.addMarker(e, "highlightIDO");
+                        }
+                    });
+                }
+                //高亮下一个任务
+                if (response.data.waitingToDo.length > 0) {
+                    response.data.waitingToDo.forEach((e) => {
+                        if (e) {
+                            canvas.addMarker(e, "highlightTODO");
+                        }
+                    });
+                }
+            })
         }
     }
 }
@@ -223,7 +221,7 @@ export default {
 <style>
 .current-row>td {
     background: #006eff;
-
+}
 /*  以下为流程图高亮样式  */
 .highlight .djs-visual > :nth-child(1) {
     stroke: green !important;
@@ -236,6 +234,5 @@ export default {
 .highlightTODO .djs-visual > :nth-child(1) {
     stroke: rgb(255, 0, 0) !important;
     fill: rgba(255, 255, 255, 0.4) !important;
-}
 }
 </style>
