@@ -174,5 +174,18 @@ export default {
 .current-row>td {
     background: #006eff;
 
+/*  以下为流程图高亮样式  */
+.highlight .djs-visual > :nth-child(1) {<!-- -->
+    stroke: green !important;
+    fill: rgba(0, 80, 0, 0.4) !important;
+}
+.highlightIDO .djs-visual > :nth-child(1) {<!-- -->
+    stroke: rgb(255, 196, 0) !important;
+    fill: rgba(255, 196, 0, 0.4) !important;
+}
+.highlightTODO .djs-visual > :nth-child(1) {<!-- -->
+    stroke: rgb(255, 0, 0) !important;
+    fill: rgba(255, 255, 255, 0.4) !important;
+}
 }
 </style>
