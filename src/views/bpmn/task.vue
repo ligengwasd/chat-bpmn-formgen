@@ -185,10 +185,29 @@ export default {
                 this.bpmnViewer.importXML(xmlData);
             })
             this.$http.get('/bpmn/highLine/'.concat(processInstanceId)).then(response => {
+                console.log("highLine数据", response.data);
+                let canvas = this.bpmnViewer.get("canvas");
                 //高亮线
                 response.data.highLine.forEach((e) => {
-                    console.log("高亮线:", e);
-                    this.bpmnViewer.get("canvas").addMarker(e, "highlight");
+                    canvas.addMarker(e, "highlight");
+                });
+                // //高亮任务
+                // response.data.highPoint.forEach((e) => {
+                //     if (e) {
+                //         canvas.addMarker(e, "highlight");
+                //     }
+                // });
+                // //高亮我执行过的任务
+                // response.data.iDo.forEach((e) => {
+                //     if (e) {
+                //         canvas.addMarker(e, "highlightIDO");
+                //     }
+                // });
+                //高亮下一个任务
+                response.data.waitingToDo.forEach((e) => {
+                    if (e) {
+                        canvas.addMarker(e, "highlightTODO");
+                    }
                 });
             })
             this.bpmnViewerDialogVisible = true;
