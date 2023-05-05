@@ -69,7 +69,9 @@
         </el-table>
     </el-dialog>
 
-    <div id="bpmnViewerCanvas" style="border: 1px solid green;height: 500px;"></div>
+    <el-dialog v-model="bpmnViewerDialogVisible" title="查看流程" style="width: 80%; height: 70%"  @closed="handleBpmnViewerDialogClose">
+        <div id="bpmnViewerCanvas" style="border: 1px solid green;height: 500px;"></div>
+    </el-dialog>
 </template>
 
 <script>
@@ -90,6 +92,7 @@ export default {
             executionList:[],
             variableDialogVisible: false,
             variableList: [],
+            bpmnViewerDialogVisible: false,
             bpmnViewer: null,
         }
     },
@@ -214,6 +217,10 @@ export default {
                     });
                 }
             })
+            this.bpmnViewerDialogVisible = true;
+        },
+        handleBpmnViewerDialogClose() {
+            this.bpmnViewer.destroy();
         }
     }
 }
