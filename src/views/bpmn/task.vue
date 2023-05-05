@@ -18,7 +18,7 @@
                 <el-table-column label="操作" width="220px">
                     <template #default="props">
                         <el-button type="primary" @click="loadVariableList({'processInstanceIdIn':props.row.id})">查看参数</el-button>
-                        <el-button type="primary" @click="processTrack({'executionIdIn':props.row})">流程追踪</el-button>
+                        <el-button type="primary" @click="processTrack(props.row.id)">流程追踪</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -176,8 +176,7 @@ export default {
             });
             this.variableDialogVisible = true;
         },
-        processTrack(processInstance) {
-            console.log("111", processInstance);
+        processTrack(processInstanceId) {
             const queryResources = '/engine-rest/process-definition/'.concat(this.processDefinitionSelectorValue).concat("/xml")
             this.$http.get(queryResources).then(response => {
                 let xmlData = response.data.bpmn20Xml;
@@ -185,12 +184,14 @@ export default {
                 console.log("bpmnXml内容:", xmlData)
                 this.bpmnViewer.importXML(xmlData);
             })
+            this.$http.get('/bpmn/highLine/'.concat(processInstanceId)).then(response => {
+                //高亮线
+                response.data.highLine.forEach((e) => {
+                    console.log("高亮线:", e);
+                    this.bpmnViewer.get("canvas").addMarker(e, "highlight");
+                });
+            })
             this.bpmnViewerDialogVisible = true;
-            // this.$http.get('/bpmn/highLine/'.concat(processInstance.definitionId), {}).then(response => {
-            //     this.processDefinitionList = response.data
-            // }) .catch(error => {
-            //     console.log(error);
-            // });
         },
         handleBpmnViewerDialogClose() {
             this.bpmnViewer.destroy();
