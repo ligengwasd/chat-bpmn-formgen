@@ -18,7 +18,7 @@
                 <el-table-column label="操作" width="220px">
                     <template #default="props">
                         <el-button type="primary" @click="loadVariableList({'processInstanceIdIn':props.row.id})">查看参数</el-button>
-                        <el-button type="primary" @click="processTrack({'executionIdIn':props.row.id})">流程追踪</el-button>
+                        <el-button type="primary" @click="processTrack({'executionIdIn':props.row})">流程追踪</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -69,15 +69,18 @@
         </el-table>
     </el-dialog>
 
-    <el-dialog v-model="bpmnViewerDialogVisible" title="查看流程" @opened = "handleBpmnViewerDialogOpen" @closed="handleBpmnViewerDialogClose" style="width: 80%; height: 70%">
+    <el-dialog v-model="bpmnViewerDialogVisible" title="查看流程" style="width: 80%; height: 70%">
         <div id="bpmnViewerCanvas" style="border: 1px solid green;height: 500px;"></div>
     </el-dialog>
+    {{processDefinitionSelectorValue}}
+    {{processInstanceList}}
 </template>
 
 <script>
 import { ElMessage } from 'element-plus'
 import dayjs from 'dayjs'
-import 'dayjs/locale/zh-cn' // 如果需要中文语言包
+import 'dayjs/locale/zh-cn'
+import BpmnViewer from "camunda-bpmn-js/lib/camunda-platform/Viewer"; // 如果需要中文语言包
 
 
 export default {
@@ -92,7 +95,8 @@ export default {
             executionList:[],
             variableDialogVisible: false,
             variableList: [],
-            bpmnViewerDialogVisible: false
+            bpmnViewerDialogVisible: false,
+            bpmnViewer: null,
         }
     },
     mounted() {
@@ -172,10 +176,21 @@ export default {
             });
             this.variableDialogVisible = true;
         },
-        processTrack(processInstanceId) {
-            console.log("111");
-            console.log(processInstanceId);
+        processTrack(processInstance) {
+            console.log("111", processInstance);
+            const queryResources = '/engine-rest/process-definition/'.concat(this.processDefinitionSelectorValue).concat("/xml")
+            this.$http.get(queryResources).then(response => {
+                let xmlData = response.data.bpmn20Xml;
+                this.bpmnViewer = new BpmnViewer({container: '#bpmnViewerCanvas'});
+                console.log("bpmnXml内容:", xmlData)
+                this.bpmnViewer.importXML(xmlData);
+            })
             this.bpmnViewerDialogVisible = true;
+            // this.$http.get('/bpmn/highLine/'.concat(processInstance.definitionId), {}).then(response => {
+            //     this.processDefinitionList = response.data
+            // }) .catch(error => {
+            //     console.log(error);
+            // });
         }
     }
 }
