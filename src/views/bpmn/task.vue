@@ -1,65 +1,59 @@
 <template>
-    <el-row>
-        <el-col :span="8" style="margin-right: 10px">
-            查询流程实例：
-            <el-select v-model="processDefinitionSelectorValue" @change="handleSelectProcessDefinition" placeholder="流程定义" clearable>
-                <el-option
-                    v-for="item in processDefinitionList"
-                    :key="item.key"
-                    :label="item.name"
-                    :value="item.id"
-                />
-            </el-select>
-            <br>
-            <br>
-            <el-table :data="processInstanceList" @current-change="handleSelectProcessInstance" highlight-current-row border style="width: 100%">
-                <el-table-column prop="id" label="流程实例" show-overflow-tooltip/>
-                <el-table-column prop="businessKey" label="业务Key" />
-                <el-table-column label="操作" width="220px">
-                    <template #default="props">
-                        <el-button type="primary" @click="loadVariableList({'processInstanceIdIn':props.row.id})">查看参数</el-button>
-                        <el-button type="primary" @click="processTrack(props.row.id)">流程追踪</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </el-col>
-        <el-col :span="15" style="margin-right: 10px">
-            执行流列表：
-            <el-table :data="executionList" @current-change="handleSelectExecution" highlight-current-row border style="width: 100%">
-                <el-table-column prop="id" label="执行流ID" show-overflow-tooltip/>
-                <el-table-column prop="ended" label="是否结束" />
-                <el-table-column label="操作" width="120px">
-                    <template #default="props">
-                        <el-button type="primary" @click="loadVariableList({'executionIdIn':props.row.id})">查看参数</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <br>
-            <br>
-            任务列表：
-            <el-table :data="taskList" border stripe>
-                <el-table-column prop="id" label="任务ID" show-overflow-tooltip/>
-                <el-table-column prop="assignee" label="指派人" />
-                <el-table-column prop="businessKey" label="名称" />
-                <el-table-column prop="name" label="任务名称" />
+    查询流程实例：
+    <el-select v-model="processDefinitionSelectorValue" @change="handleSelectProcessDefinition" placeholder="流程定义" clearable>
+        <el-option
+            v-for="item in processDefinitionList"
+            :key="item.key"
+            :label="item.name"
+            :value="item.id"
+        />
+    </el-select>
+    <br>
+    <br>
+    <el-table :data="processInstanceList" @current-change="handleSelectProcessInstance" highlight-current-row border style="width: 100%">
+        <el-table-column prop="id" label="流程实例" show-overflow-tooltip/>
+        <el-table-column prop="businessKey" label="业务Key" />
+        <el-table-column label="操作" width="220px">
+            <template #default="props">
+                <el-button type="primary" @click="loadVariableList({'processInstanceIdIn':props.row.id})">查看参数</el-button>
+                <el-button type="primary" @click="processTrack(props.row.id)">流程追踪</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+    <br>
+    执行流列表：
+    <el-table :data="executionList" @current-change="handleSelectExecution" highlight-current-row border style="width: 100%">
+        <el-table-column prop="id" label="执行流ID" show-overflow-tooltip/>
+        <el-table-column prop="ended" label="是否结束" />
+        <el-table-column label="操作" width="120px">
+            <template #default="props">
+                <el-button type="primary" @click="loadVariableList({'executionIdIn':props.row.id})">查看参数</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+    <br>
+    任务列表：
+    <el-table :data="taskList" border stripe>
+        <el-table-column prop="id" label="任务ID" show-overflow-tooltip/>
+        <el-table-column prop="assignee" label="指派人" />
+        <el-table-column prop="businessKey" label="名称" />
+        <el-table-column prop="name" label="任务名称" />
 <!--                <el-table-column prop="executionId" label="执行流ID" width="180" show-overflow-tooltip/>-->
 <!--                <el-table-column prop="processDefinitionId" label="流程定义ID" width="180" show-overflow-tooltip/>-->
 <!--                <el-table-column prop="processInstanceId" label="流程实例ID" width="180" show-overflow-tooltip/>-->
-                <el-table-column prop="taskDefinitionKey" label="taskDefinitionKey" />
-                <el-table-column label="创建时间">
-                    <template #default="props">
-                        {{formatTime(props.row.created)}}
-                    </template>
-                </el-table-column>
-                <el-table-column label="操作" width="200px">
-                    <template #default="props">
-                        <el-button type="primary" @click="completeTask(props.row)">完成</el-button>
-                        <el-button type="primary" @click="loadVariableList({'taskIdIn':props.row.id})">查看参数</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </el-col>
-    </el-row>
+        <el-table-column prop="taskDefinitionKey" label="taskDefinitionKey" />
+        <el-table-column label="创建时间">
+            <template #default="props">
+                {{formatTime(props.row.created)}}
+            </template>
+        </el-table-column>
+        <el-table-column label="操作" width="200px">
+            <template #default="props">
+                <el-button type="primary" @click="completeTask(props.row)">完成</el-button>
+                <el-button type="primary" @click="loadVariableList({'taskIdIn':props.row.id})">查看参数</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
 
     <el-dialog v-model="variableDialogVisible" title="参数列表">
         <el-table :data="variableList" border stripe style="width: 100%; height: 800px">
