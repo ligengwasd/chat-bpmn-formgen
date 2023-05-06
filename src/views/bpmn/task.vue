@@ -190,7 +190,7 @@ export default {
                 let canvas = this.bpmnViewer.get("canvas");
                 //高亮线
                 response.data.highLine.forEach((e) => {
-                    canvas.addMarker(e, "highlight");
+                    canvas.addMarker(e, "highlightFlow");
                 });
                 //高亮任务
                 if (response.data.highPoint.length > 0) {
@@ -233,6 +233,9 @@ export default {
 .highlight .djs-visual > :nth-child(1) {
     stroke: green !important;
     fill: rgba(0, 80, 0, 0.4) !important;
+}
+.highlightFlow .djs-visual > :nth-child(1) {
+    stroke: green !important;
 }
 .highlightIDO .djs-visual > :nth-child(1) {
     stroke: rgb(255, 196, 0) !important;
