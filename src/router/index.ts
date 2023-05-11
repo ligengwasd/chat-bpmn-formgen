@@ -43,6 +43,11 @@ const routes: Array<RouteRecordRaw> = [
           path: '/home/bpmn/task',  // 项目 进行中
           name: 'bpmnProcessTask',
           component: () => import('../views/bpmn/task.vue')    // 子路由
+        },
+        {
+          path: '/home/dynamicTable',  // 项目 进行中
+          name: 'dynamicTable',
+          component: () => import('../views/DynamicTable.vue')    // 子路由
         }
       ]
     }

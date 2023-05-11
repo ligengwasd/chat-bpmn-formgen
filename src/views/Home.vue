@@ -9,6 +9,9 @@
                     <router-link to="/home/chat">
                         <el-menu-item index="/home/chat">即时通信</el-menu-item>
                     </router-link>
+                    <router-link to="/home/dynamicTable">
+                        <el-menu-item index="/home/dynamicTable">动态表格</el-menu-item>
+                    </router-link>
                     <router-link to="/home/formGenerator">
                         <el-menu-item index="/home/formGenerator">表单引擎</el-menu-item>
                     </router-link>
