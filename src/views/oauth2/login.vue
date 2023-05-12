@@ -17,7 +17,7 @@ export default {
             let authorizeUrl = decode(authorizeUrlEncode)
             this.$http.get('http://localhost:8001/oauth2/doLogin?name=sa&pwd=123456').then(response => {
                 console.log(authorizeUrl);
-                // window.location.replace = authorizeUrl;
+                window.location.href = authorizeUrl;
             })
         }
     }
