@@ -46,4 +46,5 @@ app.use(TUIKit)
 
 // camunda的restapi地址engine-rest
 axios.defaults.baseURL = 'http://localhost:8082/';
+axios.defaults.withCredentials = true;
 app.config.globalProperties.$http = axios
