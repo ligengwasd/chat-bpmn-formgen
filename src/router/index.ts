@@ -48,6 +48,11 @@ const routes: Array<RouteRecordRaw> = [
           path: '/home/dynamicTable',  // 项目 进行中
           name: 'dynamicTable',
           component: () => import('../views/DynamicTable.vue')    // 子路由
+        },
+        {
+          path: '/home/oauth2login',  // 项目 进行中
+          name: '/home/oauth2login',
+          component: () => import('../views/oauth2/login.vue')    // 子路由
         }
       ]
     }

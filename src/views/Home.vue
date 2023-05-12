@@ -26,6 +26,9 @@
                     <router-link to="/home/dynamicTable">
                         <el-menu-item index="/home/dynamicTable">动态表格</el-menu-item>
                     </router-link>
+                    <router-link to="/home/oauth2login">
+                        <el-menu-item index="/home/oauth2login">oauth2登录</el-menu-item>
+                    </router-link>
 <!--                    <el-menu-item index="/home/formParser">-->
 <!--                        <router-link to="/home/formParser">表单解析器</router-link>-->
 <!--                    </el-menu-item>-->
