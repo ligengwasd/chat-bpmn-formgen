@@ -1,5 +1,7 @@
 <template>
     <div id="box"></div>
+<!--    aux-vue-amis-editor-->
+
 </template>
 
 <script>
